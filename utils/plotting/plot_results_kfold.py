@@ -16,6 +16,8 @@ PALETTE = [
 
 LINE_STYLES = ['solid', "dotted", (0, (3, 1, 1, 1, 1, 1)), "dashed", 'dashdot']
 
+X_LABEL = 'Epoch'
+
 def load_csv_data(filepath):
     data = {}
     with open(filepath, mode="r", encoding="utf-8") as f:
@@ -95,7 +97,7 @@ def plot_metrics(models_data, output_folder:str|Path):
         title = title.replace('/','_')
         title = title.replace('\\','_')
         plt.title(title, fontsize=14)
-        plt.xlabel("Step / Epoch", fontsize=12)
+        plt.xlabel(X_LABEL, fontsize=12)
         plt.ylabel(metric, fontsize=12)
         plt.legend(title="Models")
         plt.grid(True, linestyle="--", alpha=0.6)
@@ -136,7 +138,7 @@ def plot_metrics(models_data, output_folder:str|Path):
             title,
             fontsize=14,
         )
-        plt.xlabel("Step / Epoch", fontsize=12)
+        plt.xlabel(X_LABEL, fontsize=12)
         plt.ylabel(metric, fontsize=12)
         plt.legend(title="Models")
         plt.grid(True, linestyle="--", alpha=0.6)
