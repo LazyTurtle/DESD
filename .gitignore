@@ -219,3 +219,8 @@ __marimo__/
 
 # project
 .vscode/
+logs/
+data/
+
+yolo26n.pt
+yolo26m.pt
