@@ -1,8 +1,9 @@
 import os, datetime, logging
+from pathlib import Path
 
 LOGGERS : dict[str,logging.Logger] = dict()
 
-def get_logger(name:str, level:int = logging.INFO, out_folder:str|None = None, filename:str|None = None) -> logging.Logger:
+def get_logger(name:str, level:int = logging.INFO, out_folder:str|Path|None = None, filename:str|None = None) -> logging.Logger:
     global LOGGERS
     if name in LOGGERS.keys():
         return LOGGERS[name]
@@ -18,7 +19,9 @@ def get_logger(name:str, level:int = logging.INFO, out_folder:str|None = None, f
     logger.addHandler(terminal_handler)
 
     if out_folder is not None:
-        create_folder(out_folder)
+        out_folder = Path(out_folder)
+        out_folder.mkdir(parents=True, exist_ok=True)
+
         log_file = \
             (name+"_"+datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S") if filename is None else filename) + ".log"
         log_file_path = os.path.join(out_folder, log_file)
@@ -30,7 +33,3 @@ def get_logger(name:str, level:int = logging.INFO, out_folder:str|None = None, f
     LOGGERS[name] = logger
     logger.info(f"############################### Logging {logger.name} Started ###############################")
     return logger
-
-def create_folder(folder_path:str):
-    import pathlib
-    pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
