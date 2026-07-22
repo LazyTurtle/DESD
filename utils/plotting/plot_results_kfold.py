@@ -66,24 +66,37 @@ def process_folder(root_dir:str|Path):
                 if metric not in models_data:
                     models_data[metric] = {}
 
+
                 models_data[metric][model_name] = {
                     "means": means[metric],
                     "stds": stds.get(metric, [0.0] * len(means[metric])),
                 }
 
+            if 'Confidence' in means.keys():
+                models_data['x_values'] = \
+                    means["Confidence"] if 'x_values' not in models_data.keys() else \
+                        max(models_data['x_values'], means["Confidence"], key=lambda x: len(x))
+                
+            if 'epoch' in means.keys():
+                models_data['x_values'] = \
+                    means["epoch"] if 'x_values' not in models_data.keys() else \
+                        max(models_data['x_values'], means["epoch"], key=lambda x: len(x))
+
     return models_data
 
 
-def plot_metrics(models_data, output_folder:str|Path):
+def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
     output_folder = Path(output_folder)
     output_folder.mkdir(parents=True, exist_ok=True)
 
+    x_values = models_data.pop('x_values') if 'x_values' in models_data.keys() else None
     for metric, models in models_data.items():
 
         # plot 1: mean values only
         plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
-            x_steps = list(range(1, len(values["means"]) + 1))
+            x_steps = list(x_values) if x_values is not None else list(range(1, len(values["means"]) + 1))
+
             plt.plot(
                 x_steps, 
                 values["means"], 
@@ -96,22 +109,25 @@ def plot_metrics(models_data, output_folder:str|Path):
         title = f"{metric.upper()} - Means Across Models"
         title = title.replace('/','_')
         title = title.replace('\\','_')
-        plt.title(title, fontsize=14)
-        plt.xlabel(X_LABEL, fontsize=12)
-        plt.ylabel(metric, fontsize=12)
-        plt.legend(title="Models")
+        plt.title(title, fontsize=TITLE_FONTSIZE)
+        plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
+        plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
+        plt.yticks(fontsize = TEXT_FONTSIZE)
+        plt.xticks(fontsize = TEXT_FONTSIZE)
+        plt.legend(title="Models", fontsize=TEXT_FONTSIZE)
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
         plt.savefig(save_path, dpi=800, bbox_inches="tight")
         plt.close()
+        print(f'Saved {save_path}')
 
         # plot 2: means with standard deviation Area
         plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
             means = values["means"]
             stds = values["stds"]
-            x_steps = list(range(1, len(means) + 1))
+            x_steps = list(x_values) if x_values is not None else list(range(1, len(values["means"]) + 1))
 
             upper_bound = [m + s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
             lower_bound = [m - s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
@@ -134,15 +150,18 @@ def plot_metrics(models_data, output_folder:str|Path):
         title = f"{metric.upper()} - Means with Standard Deviation Shading"
         title = title.replace('/','_')
         title = title.replace('\\','_')
-        plt.title(title, fontsize=14)
-        plt.xlabel(X_LABEL, fontsize=12)
-        plt.ylabel(metric, fontsize=12)
-        plt.legend(title="Models")
+        plt.title(title, fontsize=TITLE_FONTSIZE)
+        plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
+        plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
+        plt.yticks(fontsize = TEXT_FONTSIZE)
+        plt.xticks(fontsize = TEXT_FONTSIZE)
+        plt.legend(title="Models", fontsize=TEXT_FONTSIZE)
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
         plt.savefig(save_path, dpi=800, bbox_inches="tight")
         plt.close()
+        print(f'Saved {save_path}')
 
 def plot_map(root_folder:str|Path, output_folder:str|Path):
     root_folder = Path(root_folder)
@@ -237,12 +256,13 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
     plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
-    plt.legend()
+    plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
     save_path = output_folder.joinpath(title+'.png')
     plt.savefig(save_path, dpi=800, bbox_inches="tight")
     plt.close()
+    print(f'Saved {save_path}')
 
     # --- PLOT 2: Mean mAP Values with Standard Deviation Error Bars ---
     plt.figure(figsize=FIG_SIZE)
@@ -306,12 +326,13 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
     plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
-    plt.legend()
+    plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
     save_path = output_folder.joinpath(title+'.png')
     plt.savefig(save_path, dpi=800, bbox_inches="tight")
     plt.close()
+    print(f'Saved {save_path}')
 
 def plot(root_folder:str|Path, output_folder:str|Path):
     data = process_folder(root_folder)
