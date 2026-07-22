@@ -46,9 +46,7 @@ def process_folder(root_dir:str|Path):
             csv_files = [f for f in os.listdir(entry.path) if f.endswith(".csv")]
 
             if len(csv_files) < 2:
-                print(
-                    f"Skipping '{model_name}': expected 2 CSV files, found {len(csv_files)}."
-                )
+                print(f"Skipping '{model_name}': expected 2 CSV files, found {len(csv_files)}.")
                 continue
 
             # find mean vs std file by filename keyword, or fall back to alphabetical order
