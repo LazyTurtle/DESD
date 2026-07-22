@@ -2,7 +2,6 @@ import os, csv, argparse
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-ROOT_DIR = r"D:\workspace\yolo_training\data\fold_evaluation"
 # colour palette (colorblind safe, Paul Tol's Bright)
 PALETTE = [
     '#4477AA',
@@ -15,8 +14,11 @@ PALETTE = [
 ]
 
 LINE_STYLES = ['solid', "dotted", (0, (3, 1, 1, 1, 1, 1)), "dashed", 'dashdot']
-
+FIG_SIZE = (16, 9)
 X_LABEL = 'Epoch'
+
+TITLE_FONTSIZE = 24
+TEXT_FONTSIZE = 20
 
 def load_csv_data(filepath):
     data = {}
@@ -43,7 +45,7 @@ def process_folder(root_dir:str|Path):
     for entry in os.scandir(root_dir):
         if entry.is_dir():
             model_name = entry.name
-            csv_files = [f for f in os.listdir(entry.path) if f.endswith(".csv")]
+            csv_files = [f for f in os.listdir(entry.path) if f.endswith(".csv") and 'map' not in f.lower()]
 
             if len(csv_files) < 2:
                 print(f"Skipping '{model_name}': expected 2 CSV files, found {len(csv_files)}.")
@@ -79,7 +81,7 @@ def plot_metrics(models_data, output_folder:str|Path):
     for metric, models in models_data.items():
 
         # plot 1: mean values only
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
             x_steps = list(range(1, len(values["means"]) + 1))
             plt.plot(
@@ -105,7 +107,7 @@ def plot_metrics(models_data, output_folder:str|Path):
         plt.close()
 
         # plot 2: means with standard deviation Area
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
             means = values["means"]
             stds = values["stds"]
@@ -132,10 +134,7 @@ def plot_metrics(models_data, output_folder:str|Path):
         title = f"{metric.upper()} - Means with Standard Deviation Shading"
         title = title.replace('/','_')
         title = title.replace('\\','_')
-        plt.title(
-            title,
-            fontsize=14,
-        )
+        plt.title(title, fontsize=14)
         plt.xlabel(X_LABEL, fontsize=12)
         plt.ylabel(metric, fontsize=12)
         plt.legend(title="Models")
@@ -145,9 +144,179 @@ def plot_metrics(models_data, output_folder:str|Path):
         plt.savefig(save_path, dpi=800, bbox_inches="tight")
         plt.close()
 
+def plot_map(root_folder:str|Path, output_folder:str|Path):
+    root_folder = Path(root_folder)
+    output_folder = Path(output_folder)
+    output_folder.mkdir(parents=True, exist_ok=True)
+
+    runs_data = {}
+
+    for entry in os.listdir(root_folder):
+        run_path = os.path.join(root_folder, entry)
+
+        if os.path.isdir(run_path):
+            run_name = entry
+            runs_data[run_name] = {}
+
+            for file_name in os.listdir(run_path):
+                if file_name.endswith(".csv") and 'map' in file_name.lower():
+                    file_path = os.path.join(run_path, file_name)
+
+                    with open(file_path, mode="r", newline="") as f:
+                        reader = list(csv.reader(f))
+                        if not reader:
+                            continue
+
+                        header = reader[0]
+                        is_mean = any("Mean_mAP" in col for col in header)
+                        is_std = any("Std_mAP" in col for col in header)
+
+                        for row in reader[1:3]:
+                            if len(row) >= 2:
+                                conf_label = row[0].strip()
+                                val = float(row[1].strip())
+
+                                if conf_label not in runs_data[run_name]:
+                                    runs_data[run_name][conf_label] = {}
+
+                                if is_mean:
+                                    runs_data[run_name][conf_label]["mean"] = val
+                                elif is_std:
+                                    runs_data[run_name][conf_label]["std"] = val
+
+    run_names = sorted(list(runs_data.keys()))
+    if not run_names:
+        print("No run folders found.")
+        return
+
+    conf_labels = []
+    for r in run_names:
+        for c in runs_data[r]:
+            if c not in conf_labels:
+                conf_labels.append(c)
+
+    num_runs = len(run_names)
+    x_indices = list(range(num_runs))
+
+    bar_width = 0.35
+
+    # --- PLOT 1: Mean mAP Values Only ---
+    plt.figure(figsize=FIG_SIZE)
+
+    bar_heights50 = [runs_data[run].get('50', {}).get("mean", 0.0) for run in run_names]
+    colors = 2*PALETTE[:len(run_names)]
+    offset = -0.5 * bar_width
+    x_positions = [x + offset for x in x_indices]
+    plt.bar(
+        x = x_positions,
+        height=bar_heights50,
+        width=bar_width,
+        color=colors,
+        label="mAP50",
+        edgecolor = 'Black',
+        alpha=0.8,
+    )
+    offset = 0.5 * bar_width
+    x_positions = [x + offset for x in x_indices]
+    bar_heights95 = [runs_data[run].get('95', {}).get("mean", 0.0) for run in run_names]
+
+    plt.bar(
+        x=x_positions,
+        height=bar_heights95,
+        width=bar_width,
+        color=colors,
+        hatch = '///',
+        label="mAP50-95",
+        edgecolor = 'Black',
+        alpha=0.8,
+    )
+
+    # plt.xlabel("Datasets")
+    plt.ylabel("Mean mAP", fontsize=TEXT_FONTSIZE)
+    title = "mAP Values per Run by Confidence Level"
+    plt.title(title, fontsize=TITLE_FONTSIZE)
+    plt.yticks(fontsize = TEXT_FONTSIZE)
+    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
+    plt.legend()
+    plt.grid(axis="y", linestyle="--", alpha=0.6)
+    plt.tight_layout()
+    save_path = output_folder.joinpath(title+'.png')
+    plt.savefig(save_path, dpi=800, bbox_inches="tight")
+    plt.close()
+
+    # --- PLOT 2: Mean mAP Values with Standard Deviation Error Bars ---
+    plt.figure(figsize=FIG_SIZE)
+
+    bar_heights50 = [runs_data[run].get('50', {}).get("mean", 0.0) for run in run_names]
+    stds50 = [runs_data[r].get('50', {}).get("std", 0.0) for r in run_names]
+    colors = 2*PALETTE[:len(run_names)]
+    offset = -0.5 * bar_width
+    x_positions = [x + offset for x in x_indices]
+    plt.bar(
+        x = x_positions,
+        height=bar_heights50,
+        width=bar_width,
+        color=colors,
+        label="mAP50",
+        edgecolor = 'Black',
+        yerr=stds50,
+        error_kw={"ecolor": "black", "linewidth": 1.5},
+        alpha=0.8,
+    )
+
+    for x_pos, mean, std in zip(x_positions, bar_heights50, stds50):
+        plt.fill_between(
+            [x_pos - bar_width / 2, x_pos + bar_width / 2],
+            [mean - std, mean - std],
+            [mean + std, mean + std],
+            color="black",
+            alpha=0.15,
+        )
+
+    bar_heights95 = [runs_data[run].get('95', {}).get("mean", 0.0) for run in run_names]
+    stds95 = [runs_data[r].get('95', {}).get("std", 0.0) for r in run_names]
+    offset = 0.5 * bar_width
+    x_positions = [x + offset for x in x_indices]
+
+    plt.bar(
+        x=x_positions,
+        height=bar_heights95,
+        width=bar_width,
+        color=colors,
+        hatch = '///',
+        label="mAP50-95",
+        edgecolor = 'Black',
+        yerr=stds95,
+        error_kw={"ecolor": "black", "linewidth": 1.5},
+        alpha=0.8,
+    )
+    for x_pos, mean, std in zip(x_positions, bar_heights95, stds95):
+        plt.fill_between(
+            [x_pos - bar_width / 2, x_pos + bar_width / 2],
+            [mean - std, mean - std],
+            [mean + std, mean + std],
+            color="black",
+            alpha=0.15,
+        )
+
+
+    # plt.xlabel("Datasets")
+    plt.ylabel("Mean mAP", fontsize=TEXT_FONTSIZE)
+    title = "mAP Values per Run with Standard Deviation"
+    plt.title(title, fontsize=TITLE_FONTSIZE)
+    plt.yticks(fontsize = TEXT_FONTSIZE)
+    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
+    plt.legend()
+    plt.grid(axis="y", linestyle="--", alpha=0.6)
+    plt.tight_layout()
+    save_path = output_folder.joinpath(title+'.png')
+    plt.savefig(save_path, dpi=800, bbox_inches="tight")
+    plt.close()
+
 def plot(root_folder:str|Path, output_folder:str|Path):
     data = process_folder(root_folder)
     plot_metrics(data, output_folder)
+    plot_map(root_folder, output_folder)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Plot CSV files representing  K-fold Cross Validation training and evaluation data.")
