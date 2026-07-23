@@ -1,7 +1,7 @@
 ############ TRAINING
 model: yolo26m.pt
 data: c:\Users\Emys\Pictures\apples\SMA\data.yaml
-epochs: 2
+epochs: 300
 time: None
 patience: 100
 batch: 24
