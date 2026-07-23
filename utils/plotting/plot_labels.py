@@ -107,9 +107,12 @@ def plot_instances(datasets:list[str]|list[Path], show:bool=False, out_folder:st
         container = ax.bar(dataset_name, stat, linestyle=LINE_STYLES[i], color=PALETTE[i])
         ax.bar_label(container,fmt='{:,.0f}')
 
-    ax.set_ylabel("Number of instances")
+    ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
+    ax.set_ylabel("Number of instances", fontsize=TEXT_FONTSIZE)
+    # ax.set_xlabel(fontsize=TEXT_FONTSIZE)
+    # plt.yticks(fontsize = TEXT_FONTSIZE)
+    # plt.xticks(fontsize = TEXT_FONTSIZE)
     plt.grid(visible=True,axis='y')
-    ax.set_title(plot_title)
 
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
@@ -198,7 +201,8 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
     logger.debug(f"Output folder: {out_folder}")
     create_folder(out_folder)
 
-    plot_title = "Labels area distribution as percentage of image"
+    plot_title = "Labels area distribution as percentage of image per dataset."
+    datasets.reverse()
     datasets_names = [Path(d).stem for d in datasets]
 
     areas = list()
@@ -222,10 +226,8 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
         means.append(mean)
         standard_deviations.append(deviation)
 
-    violins_labels = [dataset_name + "\n" + "μ:{:1.4f}\nσ:{:1.4f}".format(mean, variance) for dataset_name, mean, variance in zip(datasets_names, means, standard_deviations)]
-
     fig_h, ax = plt.subplots(figsize=FIGURE_SIZE)
-    ax.set_yticks([y + 1 for y in range(len(datasets_names))], labels=violins_labels)
+    ax.set_yticks([y + 1 for y in range(len(datasets_names))], labels=datasets_names, fontsize=TEXT_FONTSIZE)
     violins = ax.violinplot(areas, showmeans=True, orientation="horizontal")
     
     colors = PALETTE[:len(datasets_names)]
@@ -239,11 +241,12 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
         vp.set_edgecolor('Black')
         vp.set_linewidth(1)
 
-    plt.grid(visible=True)
-    ax.set_xlabel("Label area distribution per dataset")
-    ax.set_xbound(-0.05, 0.4)
-    ax.set_title(plot_title)
+    plt.grid(visible=True, axis='x')
+    ax.set_xbound(-0.001, 0.04)
+    ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
+    ax.set_xlabel(r"Labels' area as % of the whole image.", fontsize=TEXT_FONTSIZE)
 
+    plt.xticks(fontsize = TEXT_FONTSIZE)
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
@@ -323,7 +326,7 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
     logger.debug(f"Output folder: {out_folder}")
     create_folder(out_folder)
 
-    plot_title = 'Distribution of item instances per image'
+    plot_title = 'Distribution of item instances per image per dataset.'
     datasets_names = [Path(d).stem for d in datasets]
 
     instances_per_image = list()
@@ -345,10 +348,9 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
         means.append(mean)
         standard_deviations.append(deviation)
 
-    violins_labels = [dataset_name + "\n" + "μ:{:1.2f}\nσ:{:1.2f}".format(mean, variance) for dataset_name, mean, variance in zip(datasets_names, means, standard_deviations)]    
-    fig_h, ax_h = plt.subplots(figsize=FIGURE_SIZE)
-    ax_h.set_xticks([y + 1 for y in range(len(datasets_names))], labels=violins_labels)
-    violins = ax_h.violinplot(instances_per_image, showmeans=True, orientation="vertical")
+    fig, ax = plt.subplots(figsize=FIGURE_SIZE)
+    ax.set_xticks([y + 1 for y in range(len(datasets_names))], labels=datasets_names)
+    violins = ax.violinplot(instances_per_image, showmeans=True, orientation="vertical")
 
     for violin, color in zip(violins["bodies"], PALETTE): # type: ignore
         violin.set_facecolor(color)
@@ -359,9 +361,10 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
         vp.set_edgecolor('Black')
         vp.set_linewidth(1)
     
-    plt.grid(visible=True)
-    ax_h.set_ylabel("Number of item instances")
-    ax_h.set_title(plot_title)
+    plt.grid(visible=True, axis='y')
+    plt.yticks(fontsize=TEXT_FONTSIZE)
+    ax.set_ylabel("Number of item instances", fontsize=TEXT_FONTSIZE)
+    ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
 
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
@@ -398,8 +401,12 @@ def plot_number_of_images_per_dataset(datasets:list[str]|list[Path], show:bool=F
         first_container_labels = container_labels if first_container_labels is None else first_container_labels
         ax.bar_label(container_labels, fmt = str(sum(data)))
 
-    ax.set_title(plot_title)
-    ax.set_ylabel("Number of images")
+    ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
+    ax.set_ylabel("Number of images", fontsize=TEXT_FONTSIZE)
+    # ax.set_xlabel(fontsize=TEXT_FONTSIZE)
+    # plt.yticks(fontsize = TEXT_FONTSIZE)
+    # plt.xticks(fontsize = TEXT_FONTSIZE)
+
     # ax.set_ybound(upper=2500)
     plt.grid(visible=True,axis='y')
 
