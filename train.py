@@ -61,13 +61,13 @@ def samples_to_file(samples:list[Path], file_path:Path):
     with open(file_path, 'w') as f:
         lines = [str(s.absolute())+'\n' for s in samples]
         f.writelines(lines)
-    
+
 
 def get_kfold_splits(samples, k=5, shuffle=True, seed=None):
     if k <= 1:
-        raise ValueError("k must be greater than 1.")
+        raise ValueError(f"k={k} must be greater than 1.")
     if k > len(samples):
-        raise ValueError("k cannot be greater than the total number of samples.")
+        raise ValueError(f"k={k} cannot be greater than the total number of samples={len(samples)}.")
     
     paths = list(samples)
     
