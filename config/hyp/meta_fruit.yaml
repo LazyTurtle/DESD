@@ -1,6 +1,6 @@
 ############ TRAINING
-model: yolo26n.pt
-data: C:\Users\Emys\Pictures\apples\meta_fruit\data.yaml
+model: yolo26m.pt
+data: c:\Users\Emys\Pictures\apples\MetaFruit\data.yaml
 epochs: 2
 time: None
 patience: 100
