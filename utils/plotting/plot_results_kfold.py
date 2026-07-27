@@ -240,7 +240,7 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
 
     bar_heights50 = [runs_data[run].get('50', {}).get("mean", 0.0) for run in run_names]
     colors = 2*PALETTE[:len(run_names)]
-    offset = -0.5 * bar_width
+    offset = -1.5 * bar_width
     x_positions = [x + offset for x in x_indices]
     plt.bar(
         x = x_positions,
@@ -251,7 +251,7 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
         edgecolor = 'Black',
         alpha=0.8,
     )
-    offset = 0.5 * bar_width
+    offset = -0.5 * bar_width
     x_positions = [x + offset for x in x_indices]
     bar_heights95 = [runs_data[run].get('95', {}).get("mean", 0.0) for run in run_names]
 
@@ -266,12 +266,11 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
         alpha=0.8,
     )
 
-    # plt.xlabel("Datasets")
     plt.ylabel("Mean mAP", fontsize=TEXT_FONTSIZE)
     title = "mAP Values per Run by Confidence Level"
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
-    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
+    plt.xticks(x_indices, run_names, ha="right")
     plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
@@ -286,7 +285,7 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
     bar_heights50 = [runs_data[run].get('50', {}).get("mean", 0.0) for run in run_names]
     stds50 = [runs_data[r].get('50', {}).get("std", 0.0) for r in run_names]
     colors = 2*PALETTE[:len(run_names)]
-    offset = -0.5 * bar_width
+    offset = -1.5 * bar_width
     x_positions = [x + offset for x in x_indices]
     plt.bar(
         x = x_positions,
@@ -311,7 +310,7 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
 
     bar_heights95 = [runs_data[run].get('95', {}).get("mean", 0.0) for run in run_names]
     stds95 = [runs_data[r].get('95', {}).get("std", 0.0) for r in run_names]
-    offset = 0.5 * bar_width
+    offset = -0.5 * bar_width
     x_positions = [x + offset for x in x_indices]
 
     plt.bar(
@@ -335,13 +334,11 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
             alpha=0.15,
         )
 
-
-    # plt.xlabel("Datasets")
     plt.ylabel("Mean mAP", fontsize=TEXT_FONTSIZE)
     title = "mAP Values per Run with Standard Deviation"
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
-    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE)
+    plt.xticks(x_indices, run_names, ha="right")
     plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
