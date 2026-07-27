@@ -349,6 +349,9 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
         means.append(mean)
         standard_deviations.append(deviation)
 
+    for dataset_name, m, mu, in zip(datasets_names, means, standard_deviations):
+        logger.info(f'{dataset_name}: Mean {m}, Standard Deviation {mu}')
+        
     fig, ax = plt.subplots(figsize=FIGURE_SIZE)
     ax.set_xticks([y + 1 for y in range(len(datasets_names))], labels=datasets_names)
     violins = ax.violinplot(instances_per_image, showmeans=True, orientation="vertical")
