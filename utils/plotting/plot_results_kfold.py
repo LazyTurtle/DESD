@@ -91,30 +91,39 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
 
     x_values = models_data.pop('x_values') if 'x_values' in models_data.keys() else None
     for metric, models in models_data.items():
+        metric = metric.replace('/',' ')
+        metric = metric.replace('\\',' ')
+        metric = metric.replace('_',' ')
+        metric = metric.title()
 
         # plot 1: mean values only
-        plt.figure(figsize=FIG_SIZE)
+        fig, ax = plt.subplots()
+        ax = plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
             x_steps = list(x_values) if x_values is not None else list(range(1, len(values["means"]) + 1))
-
+            y_values:list = values['means']
+            y_values.extend([None] * max(0, (len(x_steps) - len(y_values))))
             plt.plot(
                 x_steps, 
-                values["means"], 
+                y_values, 
                 label=model_name, 
                 linewidth=2,
                 color=PALETTE[index % len(PALETTE)],
                 linestyle=LINE_STYLES[index % len(LINE_STYLES)],
             )
 
-        title = f"{metric.upper()} - Means Across Models"
-        title = title.replace('/','_')
-        title = title.replace('\\','_')
+        title = f"{metric.upper()} - Means Across Datasets"
         plt.title(title, fontsize=TITLE_FONTSIZE)
         plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        plt.legend(title="Models", fontsize=TEXT_FONTSIZE)
+        ax.legend(
+            fontsize=TEXT_FONTSIZE,
+            loc='lower center',
+            ncol=round(len(models)/2),
+            bbox_to_anchor=(0.5, -0.12),
+        )
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
@@ -123,11 +132,15 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         print(f'Saved {save_path}')
 
         # plot 2: means with standard deviation Area
-        plt.figure(figsize=FIG_SIZE)
+        fig, ax = plt.subplots()
+        ax = plt.figure(figsize=FIG_SIZE)
         for index, (model_name, values) in enumerate(models.items()):
             means = values["means"]
             stds = values["stds"]
             x_steps = list(x_values) if x_values is not None else list(range(1, len(values["means"]) + 1))
+
+            means.extend([None] * max(0, (len(x_steps) - len(means))))
+            stds.extend([None] * max(0, (len(x_steps) - len(stds))))
 
             upper_bound = [m + s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
             lower_bound = [m - s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
@@ -148,14 +161,17 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
                 alpha=0.2,
             )
         title = f"{metric.upper()} - Means with Standard Deviation Shading"
-        title = title.replace('/','_')
-        title = title.replace('\\','_')
         plt.title(title, fontsize=TITLE_FONTSIZE)
         plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        plt.legend(title="Models", fontsize=TEXT_FONTSIZE)
+        ax.legend(
+            fontsize=TEXT_FONTSIZE,
+            loc='lower center',
+            ncol=round(len(models)/2),
+            bbox_to_anchor=(0.5, -0.12),
+        )
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
