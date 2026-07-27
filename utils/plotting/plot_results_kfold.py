@@ -73,11 +73,13 @@ def process_folder(root_dir:str|Path):
                 }
 
             if 'Confidence' in means.keys():
+                models_data['x_label'] = 'Confidence'
                 models_data['x_values'] = \
                     means["Confidence"] if 'x_values' not in models_data.keys() else \
                         max(models_data['x_values'], means["Confidence"], key=lambda x: len(x))
                 
             if 'epoch' in means.keys():
+                models_data['x_label'] = 'Epochs'
                 models_data['x_values'] = \
                     means["epoch"] if 'x_values' not in models_data.keys() else \
                         max(models_data['x_values'], means["epoch"], key=lambda x: len(x))
@@ -90,6 +92,8 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
     output_folder.mkdir(parents=True, exist_ok=True)
 
     x_values = models_data.pop('x_values') if 'x_values' in models_data.keys() else None
+    x_label = models_data.pop('x_label') if 'x_label' in models_data.keys() else X_LABEL
+    x_label = str(x_label)
     for metric, models in models_data.items():
         metric = metric.replace('/',' ')
         metric = metric.replace('\\',' ')
@@ -114,7 +118,7 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
 
         title = f"{metric.upper()} - Means Across Datasets"
         plt.title(title, fontsize=TITLE_FONTSIZE)
-        plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
+        plt.xlabel(x_label, fontsize=TEXT_FONTSIZE)
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
@@ -162,7 +166,7 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
             )
         title = f"{metric.upper()} - Means with Standard Deviation Shading"
         plt.title(title, fontsize=TITLE_FONTSIZE)
-        plt.xlabel(X_LABEL, fontsize=TEXT_FONTSIZE)
+        plt.xlabel(x_label, fontsize=TEXT_FONTSIZE)
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)

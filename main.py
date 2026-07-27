@@ -55,11 +55,11 @@ def load_yaml(yaml_configuration_file:str|Path):
 
 def analyze_datasets(datasets:list[str], out_folder:str|Path):
     out_folder = Path(out_folder)    
+    plot_labels.plot_number_of_images_per_dataset(datasets, out_folder=out_folder)
     plot_labels.plot_instances_per_image(datasets, out_folder=out_folder)
     plot_labels.plot_sizes(datasets, out_folder=out_folder)
-    plot_labels.plot_instances(datasets, out_folder=out_folder)
     plot_labels.plot_labels_distribution(datasets, out_folder=out_folder)
-    plot_labels.plot_number_of_images_per_dataset(datasets, out_folder=out_folder)
+    plot_labels.plot_instances(datasets, out_folder=out_folder)
 
 def Experiment1():
     analyze_datasets(PUBLIC_DATASETS, PLOT_LABELS_ANALYSIS)
@@ -100,10 +100,7 @@ if __name__ == "__main__":
     logger = my_logging.get_logger('Train On Datasets', out_folder='logs/train_on_datasets')
 
     try:
-
-        
         Experiment1()
-
 
     except KeyboardInterrupt:
         logger.info("User interrupted the program")
