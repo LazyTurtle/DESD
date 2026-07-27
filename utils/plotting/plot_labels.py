@@ -197,16 +197,17 @@ def plot_mean_widths(datasets:list[str]|list[Path], show:bool=False, out_folder:
 def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:str|Path|None = None):
     logger = get_logger()
     logger.info("Drawing plots for the areas of labels")
-    logger.debug(str(datasets))
+    local_datasets = datasets.copy()
+    logger.debug(str(local_datasets))
     logger.debug(f"Output folder: {out_folder}")
     create_folder(out_folder)
 
     plot_title = "Labels area distribution as percentage of image per dataset."
-    datasets.reverse()
-    datasets_names = [Path(d).stem for d in datasets]
+    local_datasets.reverse()
+    datasets_names = [Path(d).stem for d in local_datasets]
 
     areas = list()
-    for dataset in datasets:
+    for dataset in local_datasets:
         labels_folder = label_analysis.get_labels_folder(dataset)
         if labels_folder is None:
             logger.error(f"Folder {labels_folder} not found")
