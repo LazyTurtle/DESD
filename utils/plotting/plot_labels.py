@@ -243,7 +243,7 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
         vp.set_linewidth(1)
 
     plt.grid(visible=True, axis='x')
-    ax.set_xbound(-0.001, 0.04)
+    ax.set_xbound(-0.001, 0.03)
     ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
     ax.set_xlabel(r"Labels' area as % of the whole image.", fontsize=TEXT_FONTSIZE)
 

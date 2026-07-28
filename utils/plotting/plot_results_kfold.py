@@ -122,10 +122,11 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
+        legend_columns = int(-(-(len(models)/2) // 1))
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
-            ncol=round(len(models)/2),
+            ncol=legend_columns,
             bbox_to_anchor=(0.5, -0.12),
         )
         plt.grid(True, linestyle="--", alpha=0.6)
@@ -170,10 +171,11 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
+        legend_columns = int(-(-(len(models)/2) // 1))
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
-            ncol=round(len(models)/2),
+            ncol=legend_columns,
             bbox_to_anchor=(0.5, -0.12),
         )
         plt.grid(True, linestyle="--", alpha=0.6)
