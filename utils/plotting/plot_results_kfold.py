@@ -122,7 +122,7 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        legend_columns = int(-(-(len(models)/2) // 1))
+        legend_columns = min(5, len(models))
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
@@ -142,13 +142,19 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         for index, (model_name, values) in enumerate(models.items()):
             means = values["means"]
             stds = values["stds"]
-            x_steps = list(x_values) if x_values is not None else list(range(1, len(values["means"]) + 1))
+            x_steps = list(x_values) if x_values is not None else list(range(0, len(values["means"])))
 
             means.extend([None] * max(0, (len(x_steps) - len(means))))
             stds.extend([None] * max(0, (len(x_steps) - len(stds))))
 
-            upper_bound = [m + s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
-            lower_bound = [m - s  if m is not None and s is not None else 0.0 for m, s in zip(means, stds)]
+            upper_bound = list()
+            lower_bound = list()
+            for m, s in zip(means, stds):
+                if m is None or s is None:
+                    break
+                upper_bound.append(m + s)
+                lower_bound.append(m - s)
+            
 
             (line,) = plt.plot(
                 x_steps, 
@@ -159,7 +165,7 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
                 linestyle=LINE_STYLES[index % len(LINE_STYLES)],
             )
             plt.fill_between(
-                x_steps,
+                x_steps[:len(upper_bound)],
                 lower_bound,
                 upper_bound,
                 color=line.get_color(),
@@ -171,7 +177,7 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        legend_columns = int(-(-(len(models)/2) // 1))
+        legend_columns = min(5, len(models))
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
