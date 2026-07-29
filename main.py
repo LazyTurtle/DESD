@@ -246,11 +246,11 @@ def Experiment4():
     def reduce_dataset():
         minne = Path(r"C:\Users\Emys\Pictures\apples\MinneApple")
         output = Path(r"data\EXPERIMENT4\minne")
-        subsample.reduce_dataset(minne, output / 'M0', round(1920 * 0.50))
-        subsample.reduce_dataset(minne, output / 'M1', round(1920 * 0.25))
-        subsample.reduce_dataset(minne, output / 'M2', round(1920 * 0.10))
-        subsample.reduce_dataset(minne, output / 'M3', round(1920 * 0.05))
-        subsample.reduce_dataset(minne, output / 'M4', round(1920 * 0.02))
+        subsample.reduce_dataset(minne, output / 'M50', round(1920 * 0.50))
+        subsample.reduce_dataset(minne, output / 'M25', round(1920 * 0.25))
+        subsample.reduce_dataset(minne, output / 'M10', round(1920 * 0.10))
+        subsample.reduce_dataset(minne, output / 'M05', round(1920 * 0.05))
+        subsample.reduce_dataset(minne, output / 'M02', round(1920 * 0.02))
     
     reduce_dataset()
     # after this, merge the datasets with copies of SB1
