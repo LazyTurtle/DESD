@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 from tqdm import tqdm
 
-def reduce_dataset(dataset: str|Path, output_dataset: str|Path, n:int) -> list[Path]:
+def reduce_dataset(dataset: str|Path, output_dataset: str|Path, n:int, overwrite:bool=False) -> list[Path]:
     """
     Copy N alphabetically ordered, equally spaced samples from a source dataset to a new dataset.
 
@@ -28,6 +28,13 @@ def reduce_dataset(dataset: str|Path, output_dataset: str|Path, n:int) -> list[P
         return []
     dataset = Path(dataset)
     output_dataset = Path(output_dataset)
+
+    if output_dataset.exists() and not overwrite:
+        print(f'Dataset {output_dataset} already exists.')
+        return []
+    if output_dataset.exists():
+        shutil.rmtree(output_dataset)
+    
     in_images = dataset / 'images'
     in_labels = dataset / 'labels'
     out_images = output_dataset / 'images'
@@ -39,7 +46,7 @@ def reduce_dataset(dataset: str|Path, output_dataset: str|Path, n:int) -> list[P
 
     return copied_images
 
-def subsample_dataset(dataset: str|Path, output_dataset: str|Path, n:int) -> list[Path]:
+def subsample_dataset(dataset: str|Path, output_dataset: str|Path, n:int, overwrite:bool=False) -> list[Path]:
 
     def copy_every_n_file(source:Path, destination:Path, n:int):
         destination.mkdir(parents=True, exist_ok=True)
@@ -56,6 +63,12 @@ def subsample_dataset(dataset: str|Path, output_dataset: str|Path, n:int) -> lis
 
     dataset = Path(dataset)
     output_dataset = Path(output_dataset)
+    if output_dataset.exists() and not overwrite:
+        print(f'Dataset {output_dataset} already exists.')
+        return []
+    if output_dataset.exists():
+        shutil.rmtree(output_dataset)
+
     in_images = dataset / 'images'
     in_labels = dataset / 'labels'
     out_images = output_dataset / 'images'
