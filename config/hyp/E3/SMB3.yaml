@@ -15,7 +15,7 @@ project: data/synB_minne/training/SMB/SMB3
 name: SMB3
 exist_ok: False
 pretrained: True
-optimizer: auto
+optimizer: AdamW
 seed: 0
 deterministic: True
 verbose: True
@@ -30,13 +30,13 @@ amp: True
 fraction: 1.0
 profile: False
 freeze: None
-lr0: 0.000119  # initial learning rate (SGD=1E-2, Adam=1E-3)
-lrf: 0.1  # final OneCycleLR learning rate (lr0 * lrf)
-momentum: 0.9  # SGD momentum/Adam beta1
-weight_decay: 0.0005  # optimizer weight decay 5e-4
-warmup_epochs: 3.0  # warmup epochs (fractions ok)
-warmup_momentum: 0.8  # warmup initial momentum
-warmup_bias_lr: 0.1  # warmup initial bias lr
+lr0: 0.001
+lrf: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.0
 box: 0.05  # box loss gain
 cls: 0.3  # cls loss gain
 dfl: 1.5 # focal loss
