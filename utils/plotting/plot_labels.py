@@ -247,6 +247,10 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
     ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
     ax.set_xlabel(r"Labels' area as % of the whole image.", fontsize=TEXT_FONTSIZE)
 
+    import matplotlib.ticker as mtick
+    tick_format = mtick.PercentFormatter(decimals=3, symbol="%")
+    ax.xaxis.set_major_formatter(tick_format)
+
     plt.xticks(fontsize = TEXT_FONTSIZE)
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
@@ -327,7 +331,7 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
     logger.debug(f"Output folder: {out_folder}")
     create_folder(out_folder)
 
-    plot_title = 'Distribution of item instances per image per dataset.'
+    plot_title = 'Distribution of item instances per image per dataset'
     datasets_names = [Path(d).stem for d in datasets]
 
     instances_per_image = list()
