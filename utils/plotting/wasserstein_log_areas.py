@@ -25,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 from tqdm import tqdm
-from scipy.stats import spearmanr, wasserstein_distance
+from scipy.stats import bootstrap, spearmanr, wasserstein_distance
 
 from ..training.my_logging import get_logger
 # --------------------------------------------------------------------------
@@ -85,6 +85,16 @@ RESULTS_CSV = Path("logs/wasserstein/wasserstein_results.csv")
 # Guard against log(0) for degenerate zero-area boxes.
 AREA_EPSILON = 1e-12
 
+# Bootstrap CI settings for each dataset's Wasserstein distance. Dataset and
+# test-set log-areas are resampled independently (with replacement) each
+# iteration, the distance is recomputed, and the CI is the percentile
+# interval of the resulting distribution. N_BOOTSTRAP_RESAMPLES is kept high
+# (10k+) for a stable estimate; drop it while iterating on the rest of the
+# script since it dominates runtime.
+N_BOOTSTRAP_RESAMPLES = 10_000
+CONFIDENCE_LEVEL = 0.95
+BOOTSTRAP_SEED = 42
+
 # --------------------------------------------------------------------------
 
 
@@ -138,8 +148,12 @@ def main() -> None:
         test_log_areas.std(),
     )
 
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+
     names = []
     distances = []
+    ci_lows = []
+    ci_highs = []
 
     for name, labels_dir in DATASETS:
         logger.info("Processing dataset '%s': %s", name, labels_dir)
@@ -147,24 +161,48 @@ def main() -> None:
 
         distance = wasserstein_distance(log_areas, test_log_areas)
 
+        boot_result = bootstrap(
+            (log_areas, test_log_areas),
+            statistic=lambda a, b: wasserstein_distance(a, b),
+            n_resamples=N_BOOTSTRAP_RESAMPLES,
+            paired=False,
+            vectorized=False,
+            confidence_level=CONFIDENCE_LEVEL,
+            method="percentile",
+            rng=rng,
+        )
+        ci_low = boot_result.confidence_interval.low
+        ci_high = boot_result.confidence_interval.high
+
         logger.info(
             "Dataset '%s': %d annotations, log-area mean=%.4f, std=%.4f, "
-            "wasserstein_distance(vs test)=%.6f",
+            "wasserstein_distance(vs test)=%.6f, %.0f%% bootstrap CI=[%.6f, %.6f] "
+            "(n_resamples=%d)",
             name,
             log_areas.size,
             log_areas.mean(),
             log_areas.std(),
             distance,
+            CONFIDENCE_LEVEL * 100,
+            ci_low,
+            ci_high,
+            N_BOOTSTRAP_RESAMPLES,
         )
 
         names.append(name)
         distances.append(distance)
+        ci_lows.append(ci_low)
+        ci_highs.append(ci_high)
 
     with open(RESULTS_CSV, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["dataset", "wasserstein_distance"])
-        for name, distance in zip(names, distances):
-            writer.writerow([name, distance])
+        writer.writerow(
+            ["dataset", "wasserstein_distance", "ci_low", "ci_high"]
+        )
+        for name, distance, ci_low, ci_high in zip(
+            names, distances, ci_lows, ci_highs
+        ):
+            writer.writerow([name, distance, ci_low, ci_high])
     logger.info("Wrote Wasserstein distances to %s", RESULTS_CSV)
 
     if SPEARMAN_Y_VALUES is None:

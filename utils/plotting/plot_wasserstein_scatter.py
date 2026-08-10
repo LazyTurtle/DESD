@@ -9,9 +9,10 @@ dataset name, with a Y value you fill in below.
 import csv
 from pathlib import Path
 
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.markers as mk
-from scipy.stats import spearmanr
+from scipy.stats import bootstrap, spearmanr
 
 PALETTE = [
     '#4477AA',
@@ -76,6 +77,15 @@ Y_VALUES = {
     'SC3' : 0.521,
 }
 
+# Bootstrap CI for Spearman's rho. (X, Y) pairs are resampled together
+# (with replacement) each iteration, rho is recomputed, and the CI is the
+# percentile interval of the resulting distribution. Meaningless below ~3-4
+# datasets - there just aren't enough points for resampling to say anything.
+N_BOOTSTRAP_RESAMPLES = 10_000
+CONFIDENCE_LEVEL = 0.95
+BOOTSTRAP_SEED = 42
+MIN_DATASETS_FOR_BOOTSTRAP = 4
+
 
 def load_distances(results_csv: Path) -> dict:
     if not results_csv.is_file():
@@ -124,7 +134,37 @@ def main() -> None:
 
     if len(xs) >= 2:
         correlation, p_value = spearmanr(xs, ys)
-        ax.set_title(f"Spearman rho={correlation:.3f}, p={p_value:.4f}")
+        title = f"Spearman rho={correlation:.3f}, p={p_value:.4f}"
+
+        if len(xs) >= MIN_DATASETS_FOR_BOOTSTRAP:
+            rng = np.random.default_rng(BOOTSTRAP_SEED)
+            boot_result = bootstrap(
+                (np.asarray(xs), np.asarray(ys)),
+                statistic=lambda a, b: spearmanr(a, b).statistic,
+                n_resamples=N_BOOTSTRAP_RESAMPLES,
+                paired=True,
+                vectorized=False,
+                confidence_level=CONFIDENCE_LEVEL,
+                method="percentile",
+                rng=rng,
+            )
+            ci_low = boot_result.confidence_interval.low
+            ci_high = boot_result.confidence_interval.high
+            title += (
+                f"\n{CONFIDENCE_LEVEL * 100:.0f}% bootstrap CI="
+                f"[{ci_low:.3f}, {ci_high:.3f}] (n_resamples={N_BOOTSTRAP_RESAMPLES})"
+            )
+            print(
+                f"Spearman rho={correlation:.3f}, {CONFIDENCE_LEVEL * 100:.0f}% "
+                f"bootstrap CI=[{ci_low:.3f}, {ci_high:.3f}]"
+            )
+        else:
+            print(
+                f"Only {len(xs)} datasets - skipping bootstrap CI "
+                f"(need >= {MIN_DATASETS_FOR_BOOTSTRAP})."
+            )
+
+        ax.set_title(title)
 
     fig.tight_layout()
     fig.savefig(OUTPUT_FIGURE, dpi=200)
