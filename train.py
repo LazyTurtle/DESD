@@ -6,7 +6,7 @@ from pathlib import Path
 from utils.training import my_logging
 
 HOME = os.getcwd().strip()
-LOG_FOLDER = r'logs\detection'
+LOG_FOLDER = r'logs\train'
 
 def logger():
     return my_logging.get_logger('main_logger', out_folder=LOG_FOLDER)

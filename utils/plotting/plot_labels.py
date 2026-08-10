@@ -5,7 +5,7 @@ from pathlib import Path
 from ..training import my_logging
 from ..labels import label_analysis
 
-LOGS_FOLDER = os.path.join("config","logs","plotting_logs")
+LOGS_FOLDER = "logs/plotting_logs"
 PLOT_FOLDER = os.path.join("plots")
 
 # since there are a lot of models, we need something to differentiates the various lines

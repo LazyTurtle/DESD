@@ -3,7 +3,7 @@ from pathlib import Path
 
 from ..training import my_logging
 
-LOGS_FOLDER = "config/logs/labels_analysis"
+LOGS_FOLDER = "logs/labels_analysis"
 
 
 class IterativeCalculator:
