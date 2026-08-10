@@ -14,17 +14,22 @@ from utils.plotting import plot_labels
 from utils.dataset import subsample
 
 FOLDS = 5
+
+################################################################################
+#################### E1
+################################################################################
+
 PUBLIC_DATASETS_HYP = [
-    r"config\hyp\acfr.yaml",
-    r"config\hyp\agroscope.yaml",
-    r"config\hyp\apple_mots.yaml",
-    r"config\hyp\deep_fruits.yaml",
-    r"config\hyp\kfuji.yaml",
-    r"config\hyp\meta_fruit.yaml",
-    r"config\hyp\minne_apple.yaml",
-    r"config\hyp\open.yaml",
-    r"config\hyp\sma.yaml",
-    r"config\hyp\wsu.yaml",
+    r"config\hyp\E1\acfr.yaml",
+    r"config\hyp\E1\agroscope.yaml",
+    r"config\hyp\E1\apple_mots.yaml",
+    r"config\hyp\E1\deep_fruits.yaml",
+    r"config\hyp\E1\kfuji.yaml",
+    r"config\hyp\E1\meta_fruit.yaml",
+    r"config\hyp\E1\minne_apple.yaml",
+    r"config\hyp\E1\open.yaml",
+    r"config\hyp\E1\sma.yaml",
+    r"config\hyp\E1\wsu.yaml",
 ]
 
 PUBLIC_DATASETS = [
@@ -43,13 +48,16 @@ PUBLIC_DATASETS = [
 OPEN_IOT_DATASET = r"C:\Users\Emys\Pictures\OpenIoT"
 OPEN_IOT_EVALUATION_DATA = r"C:\Users\Emys\Pictures\OpenIoT\data.yaml"
 
-PD_EVALUATION_FOLDER =                 Path(r'data\public\evaluation')
-PD_AGGREGATED_TRAINING_RESULTS =       Path(r'data\public\folds_training')
-PD_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\public\folds_evaluation')
+PD_EVALUATION_FOLDER =                 Path(r'data\E1\evaluation')
+PD_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E1\folds_training')
+PD_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E1\folds_evaluation')
+PD_PLOT_TRAINING_OUTPUT =              Path(r'data\E1\plots_train')
+PD_PLOT_EVALUATION_OUTPUT =            Path(r'data\E1\plots_eval')
+PD_PLOT_LABELS_ANALYSIS =              Path(r'data\E1\plots_labels')
 
-PD_PLOT_TRAINING_OUTPUT =              Path(r'data\public\plots_train')
-PD_PLOT_EVALUATION_OUTPUT =            Path(r'data\public\plots_eval')
-PD_PLOT_LABELS_ANALYSIS =              Path(r'data\public\plots_labels')
+################################################################################
+#################### E2
+################################################################################
 
 SYNTH_A = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A")
 SYNTH_B = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B")
@@ -60,27 +68,27 @@ SYNTH_BS = Path(r"C:\Users\Emys\Pictures\SyntAC\SB")
 SYNTH_CS = Path(r"C:\Users\Emys\Pictures\SyntAC\SC")
 
 HYP_SA =[
-    r'config\hyp\SA0.yaml',
-    r'config\hyp\SA1.yaml',
-    r'config\hyp\SA2.yaml',
-    r'config\hyp\SA3.yaml',
-    r'config\hyp\SA4.yaml',
+    r'config\hyp\E2\SA0.yaml',
+    r'config\hyp\E2\SA1.yaml',
+    r'config\hyp\E2\SA2.yaml',
+    r'config\hyp\E2\SA3.yaml',
+    r'config\hyp\E2\SA4.yaml',
 ]
 
 HYP_SB =[
-    r'config\hyp\SB0.yaml',
-    r'config\hyp\SB1.yaml',
-    r'config\hyp\SB2.yaml',
-    r'config\hyp\SB3.yaml',
-    r'config\hyp\SB4.yaml',
+    r'config\hyp\E2\SB0.yaml',
+    r'config\hyp\E2\SB1.yaml',
+    r'config\hyp\E2\SB2.yaml',
+    r'config\hyp\E2\SB3.yaml',
+    r'config\hyp\E2\SB4.yaml',
 ]
 
 HYP_SC =[
-    r'config\hyp\SC0.yaml',
-    r'config\hyp\SC1.yaml',
-    r'config\hyp\SC2.yaml',
-    r'config\hyp\SC3.yaml',
-    r'config\hyp\SC4.yaml',
+    r'config\hyp\E2\SC0.yaml',
+    r'config\hyp\E2\SC1.yaml',
+    r'config\hyp\E2\SC2.yaml',
+    r'config\hyp\E2\SC3.yaml',
+    r'config\hyp\E2\SC4.yaml',
 ]
 
 SD_PLOT_LABELS_ANALYSIS =               Path(r'data\syn\plots_labels')
@@ -104,6 +112,104 @@ SDC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synC\folds_training')
 SDC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synC\folds_evaluation')
 SDC_PLOT_TRAINING_OUTPUT =              Path(r'data\synC\plots_train')
 SDC_PLOT_EVALUATION_OUTPUT =            Path(r'data\synC\plots_eval')
+
+################################################################################
+#################### E3
+################################################################################
+
+HYP_SMA =[
+    r'config\hyp\E3\SMA0.yaml',
+    r'config\hyp\E3\SMA1.yaml',
+    r'config\hyp\E3\SMA2.yaml',
+    r'config\hyp\E3\SMA3.yaml',
+    r'config\hyp\E3\SMA4.yaml',
+]
+
+HYP_SMB =[
+    r'config\hyp\E3\SMB0.yaml',
+    r'config\hyp\E3\SMB1.yaml',
+    r'config\hyp\E3\SMB2.yaml',
+    r'config\hyp\E3\SMB3.yaml',
+    r'config\hyp\E3\SMB4.yaml',
+]
+
+HYP_SMC =[
+    r'config\hyp\E3\SMC0.yaml',
+    r'config\hyp\E3\SMC1.yaml',
+    r'config\hyp\E3\SMC2.yaml',
+    r'config\hyp\E3\SMC3.yaml',
+    r'config\hyp\E3\SMC4.yaml',
+]
+
+SMA_EVALUATION_FOLDER =                 Path(r'data\synA_minne\evaluation')
+SMA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synA_minne\folds_training')
+SMA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synA_minne\folds_evaluation')
+SMA_PLOT_TRAINING_OUTPUT =              Path(r'data\synA_minne\plots_train')
+SMA_PLOT_EVALUATION_OUTPUT =            Path(r'data\synA_minne\plots_eval')
+
+
+SMB_EVALUATION_FOLDER =                 Path(r'data\synB_minne\evaluation')
+SMB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synB_minne\folds_training')
+SMB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synB_minne\folds_evaluation')
+SMB_PLOT_TRAINING_OUTPUT =              Path(r'data\synB_minne\plots_train')
+SMB_PLOT_EVALUATION_OUTPUT =            Path(r'data\synB_minne\plots_eval')
+
+
+SMC_EVALUATION_FOLDER =                 Path(r'data\synC_minne\evaluation')
+SMC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synC_minne\folds_training')
+SMC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synC_minne\folds_evaluation')
+SMC_PLOT_TRAINING_OUTPUT =              Path(r'data\synC_minne\plots_train')
+SMC_PLOT_EVALUATION_OUTPUT =            Path(r'data\synC_minne\plots_eval')
+
+
+################################################################################
+#################### E4
+################################################################################
+HYP_SN =[
+    r'config\hyp\E4\SN00.yaml',
+    r'config\hyp\E4\SN02.yaml',
+    r'config\hyp\E4\SN05.yaml',
+    r'config\hyp\E4\SN10.yaml',
+    r'config\hyp\E4\SN25.yaml',
+    r'config\hyp\E4\SN50.yaml',
+]
+
+SN_EVALUATION_FOLDER =                 Path(r'data\E4\SN\evaluation')
+SN_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\SN\folds_training')
+SN_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\SN\folds_evaluation')
+SN_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\SN\plots_train')
+SN_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\SN\plots_eval')
+
+HYP_SF =[
+    r'config\hyp\E4\SF00.yaml',
+    r'config\hyp\E4\SF02.yaml',
+    r'config\hyp\E4\SF05.yaml',
+    r'config\hyp\E4\SF10.yaml',
+    r'config\hyp\E4\SF25.yaml',
+    r'config\hyp\E4\SF50.yaml',
+]
+
+SF_EVALUATION_FOLDER =                 Path(r'data\E4\SF\evaluation')
+SF_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\SF\folds_training')
+SF_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\SF\folds_evaluation')
+SF_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\SF\plots_train')
+SF_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\SF\plots_eval')
+
+HYP_SM =[
+    r'config\hyp\E4\SM00.yaml',
+    r'config\hyp\E4\SM02.yaml',
+    r'config\hyp\E4\SM05.yaml',
+    r'config\hyp\E4\SM10.yaml',
+    r'config\hyp\E4\SM25.yaml',
+    r'config\hyp\E4\SM50.yaml',
+]
+
+SM_EVALUATION_FOLDER =                 Path(r'data\E4\minne\evaluation')
+SM_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\minne\folds_training')
+SM_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\minne\folds_evaluation')
+SM_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\minne\plots_train')
+SM_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\minne\plots_eval')
+
 
 def load_yaml(yaml_configuration_file:str|Path):
     yaml_configuration_file = Path(yaml_configuration_file)
@@ -160,9 +266,6 @@ def trainX(
     plot_results_kfold.plot(aggregated_evaluation_folder, plot_evaluation_folder)
 
 def Experiment1():
-    # with_open_iot = PUBLIC_DATASETS.copy()
-    # with_open_iot.append(OPEN_IOT_DATASET)
-    # analyze_datasets(with_open_iot, PD_PLOT_LABELS_ANALYSIS)
     analyze_datasets(PUBLIC_DATASETS, PD_PLOT_LABELS_ANALYSIS)
 
     trainX(
@@ -195,10 +298,9 @@ def Experiment2():
         subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC4', 16)
 
 
-    # analyze_datasets([SYNTH_A, SYNTH_B, SYNTH_C, Path(OPEN_IOT_DATASET)], SD_PLOT_LABELS_ANALYSIS)
     analyze_datasets([SYNTH_A, SYNTH_B, SYNTH_C], SD_PLOT_LABELS_ANALYSIS)
 
-    # subsample_datasets()
+    subsample_datasets()
 
     trainX(
         HYP_SA,
@@ -239,29 +341,108 @@ def Experiment3():
         subsample.reduce_dataset(minne, output / 'M4', int(240 / 4))
     
     reduce_dataset()
-    # after this, merge the datasets with a copy of the synthetic datasets of the corresponding size tier
+    # after this, merge the reduced minne dataset with copies of the synthetic datasets of the corresponding size tier
     return
+
+    trainX(
+        HYP_SMA,
+        SMA_AGGREGATED_TRAINING_RESULTS,
+        SMA_EVALUATION_FOLDER,
+        SMA_AGGREGATED_EVALUATION_RESULTS,
+        SMA_PLOT_TRAINING_OUTPUT,
+        SMA_PLOT_EVALUATION_OUTPUT
+    )
+
+    trainX(
+        HYP_SMB,
+        SMB_AGGREGATED_TRAINING_RESULTS,
+        SMB_EVALUATION_FOLDER,
+        SMB_AGGREGATED_EVALUATION_RESULTS,
+        SMB_PLOT_TRAINING_OUTPUT,
+        SMB_PLOT_EVALUATION_OUTPUT
+    )
+
+    trainX(
+        HYP_SMC,
+        SMC_AGGREGATED_TRAINING_RESULTS,
+        SMC_EVALUATION_FOLDER,
+        SMC_AGGREGATED_EVALUATION_RESULTS,
+        SMC_PLOT_TRAINING_OUTPUT,
+        SMC_PLOT_EVALUATION_OUTPUT
+    )
+
 
 def Experiment4():
     def reduce_dataset():
-        minne = Path(r"C:\Users\Emys\Pictures\apples\MinneApple")
+        dataset = Path(r"C:\Users\Emys\Pictures\apples\MinneApple")
         output = Path(r"data\EXPERIMENT4\minne")
-        subsample.reduce_dataset(minne, output / 'M50', round(1920 * 0.50))
-        subsample.reduce_dataset(minne, output / 'M25', round(1920 * 0.25))
-        subsample.reduce_dataset(minne, output / 'M10', round(1920 * 0.10))
-        subsample.reduce_dataset(minne, output / 'M05', round(1920 * 0.05))
-        subsample.reduce_dataset(minne, output / 'M02', round(1920 * 0.02))
+        subsample.reduce_dataset(dataset, output / 'M50', round(480 * 0.50))
+        subsample.reduce_dataset(dataset, output / 'M25', round(480 * 0.25))
+        subsample.reduce_dataset(dataset, output / 'M10', round(480 * 0.10))
+        subsample.reduce_dataset(dataset, output / 'M05', round(480 * 0.05))
+        subsample.reduce_dataset(dataset, output / 'M02', round(480 * 0.02))
+
+        dataset = Path(r"C:\Users\Emys\Pictures\apples\MetaFruit")
+        output = Path(r"data\EXPERIMENT4\meta_fruit")
+        subsample.reduce_dataset(dataset, output / 'F50', round(480 * 0.50))
+        subsample.reduce_dataset(dataset, output / 'F25', round(480 * 0.25))
+        subsample.reduce_dataset(dataset, output / 'F10', round(480 * 0.10))
+        subsample.reduce_dataset(dataset, output / 'F05', round(480 * 0.05))
+        subsample.reduce_dataset(dataset, output / 'F02', round(480 * 0.02))
+
+        dataset = Path(r"C:\Users\Emys\Pictures\apples\APPLE MOTS")
+        output = Path(r"data\EXPERIMENT4\mots")
+        subsample.reduce_dataset(dataset, output / 'N50', round(480 * 0.50))
+        subsample.reduce_dataset(dataset, output / 'N25', round(480 * 0.25))
+        subsample.reduce_dataset(dataset, output / 'N10', round(480 * 0.10))
+        subsample.reduce_dataset(dataset, output / 'N05', round(480 * 0.05))
+        subsample.reduce_dataset(dataset, output / 'N02', round(480 * 0.02))
     
     reduce_dataset()
-    # after this, merge the datasets with copies of SB1
+    # after this, merge the datasets with copies of SC3
     return
 
+    trainX(
+        HYP_SM,
+        SM_AGGREGATED_TRAINING_RESULTS,
+        SM_EVALUATION_FOLDER,
+        SM_AGGREGATED_EVALUATION_RESULTS,
+        SM_PLOT_TRAINING_OUTPUT,
+        SM_PLOT_EVALUATION_OUTPUT
+    )
+
+    trainX(
+        HYP_SN,
+        SN_AGGREGATED_TRAINING_RESULTS,
+        SN_EVALUATION_FOLDER,
+        SN_AGGREGATED_EVALUATION_RESULTS,
+        SN_PLOT_TRAINING_OUTPUT,
+        SN_PLOT_EVALUATION_OUTPUT
+    )
+
+    trainX(
+        HYP_SF,
+        SF_AGGREGATED_TRAINING_RESULTS,
+        SF_EVALUATION_FOLDER,
+        SF_AGGREGATED_EVALUATION_RESULTS,
+        SF_PLOT_TRAINING_OUTPUT,
+        SF_PLOT_EVALUATION_OUTPUT
+    )
+
+
 if __name__ == "__main__":
-    logger = my_logging.get_logger('Train On Datasets', out_folder='logs/train_on_datasets')
+    logger = my_logging.get_logger('ExperimentPipeline', out_folder='logs/pipeline')
 
     try:
+
         Experiment1()
+        logger.info('Experiment 1 complete.')
         Experiment2()
+        logger.info('Experiment 2 complete.')
+        Experiment3()
+        logger.info('Experiment 3 complete.')
+        Experiment4()
+        logger.info('Experiment 4 complete.')
 
     except KeyboardInterrupt:
         logger.info("User interrupted the program")
