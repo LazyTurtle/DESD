@@ -15,7 +15,7 @@ project: data/E4/training/SM\SM00
 name: SM00
 exist_ok: False
 pretrained: True
-optimizer: auto
+optimizer: AdamW
 seed: 0
 deterministic: True
 verbose: True

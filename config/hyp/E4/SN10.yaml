@@ -15,7 +15,7 @@ project: data/E4/training/SN\SN10
 name: SN10
 exist_ok: False
 pretrained: True
-optimizer: auto
+optimizer: AdamW
 seed: 0
 deterministic: True
 verbose: True
