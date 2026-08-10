@@ -91,10 +91,10 @@ AREA_EPSILON = 1e-12
 # interval of the resulting distribution. N_BOOTSTRAP_RESAMPLES is kept high
 # (10k+) for a stable estimate; drop it while iterating on the rest of the
 # script since it dominates runtime.
-N_BOOTSTRAP_RESAMPLES = 10_000
+N_BOOTSTRAP_RESAMPLES = 10000
 CONFIDENCE_LEVEL = 0.95
 BOOTSTRAP_SEED = 42
-
+BOOTSTRAP_BATCH_SIZE = 1000
 # --------------------------------------------------------------------------
 
 
@@ -165,6 +165,7 @@ def main() -> None:
             (log_areas, test_log_areas),
             statistic=lambda a, b: wasserstein_distance(a, b),
             n_resamples=N_BOOTSTRAP_RESAMPLES,
+            batch=BOOTSTRAP_BATCH_SIZE,
             paired=False,
             vectorized=False,
             confidence_level=CONFIDENCE_LEVEL,

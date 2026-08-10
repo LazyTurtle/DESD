@@ -81,10 +81,11 @@ Y_VALUES = {
 # (with replacement) each iteration, rho is recomputed, and the CI is the
 # percentile interval of the resulting distribution. Meaningless below ~3-4
 # datasets - there just aren't enough points for resampling to say anything.
-N_BOOTSTRAP_RESAMPLES = 10_000
+N_BOOTSTRAP_RESAMPLES = 10000
 CONFIDENCE_LEVEL = 0.95
 BOOTSTRAP_SEED = 42
 MIN_DATASETS_FOR_BOOTSTRAP = 4
+BOOTSTRAP_BATCH_SIZE = 1000
 
 
 def load_distances(results_csv: Path) -> dict:
@@ -142,6 +143,7 @@ def main() -> None:
                 (np.asarray(xs), np.asarray(ys)),
                 statistic=lambda a, b: spearmanr(a, b).statistic,
                 n_resamples=N_BOOTSTRAP_RESAMPLES,
+                batch=BOOTSTRAP_BATCH_SIZE,
                 paired=True,
                 vectorized=False,
                 confidence_level=CONFIDENCE_LEVEL,
@@ -152,7 +154,7 @@ def main() -> None:
             ci_high = boot_result.confidence_interval.high
             title += (
                 f"\n{CONFIDENCE_LEVEL * 100:.0f}% bootstrap CI="
-                f"[{ci_low:.3f}, {ci_high:.3f}] (n_resamples={N_BOOTSTRAP_RESAMPLES})"
+                f"[{ci_low:.3f}, {ci_high:.3f}] (resamples={N_BOOTSTRAP_RESAMPLES})"
             )
             print(
                 f"Spearman rho={correlation:.3f}, {CONFIDENCE_LEVEL * 100:.0f}% "
@@ -167,7 +169,7 @@ def main() -> None:
         ax.set_title(title)
 
     fig.tight_layout()
-    fig.savefig(OUTPUT_FIGURE, dpi=200)
+    fig.savefig(OUTPUT_FIGURE, dpi=800)
     print(f"Saved figure to {OUTPUT_FIGURE}")
 
 
