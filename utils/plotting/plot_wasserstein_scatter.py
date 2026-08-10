@@ -10,17 +10,70 @@ import csv
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import matplotlib.markers as mk
 from scipy.stats import spearmanr
 
-RESULTS_CSV = Path("wasserstein_results.csv")
-OUTPUT_FIGURE = Path("wasserstein_scatter.png")
+PALETTE = [
+    '#4477AA',
+    '#EE6677',
+    '#228833',
+    '#CCBB44',
+    '#66CCEE',
+    '#AA3377',
+    '#BBBBBB',
+    '#4477AA',
+    '#EE6677',
+    '#228833',
+    '#444444',
+    '#444444',
+    '#444444',
+    '#444444',
+    '#444444',
+    '#444444',
+]
+
+MARKERS = [
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "o",
+    "p",
+    "p",
+    "p",
+    "p",
+    "p",
+    "p",
+]
+
+
+RESULTS_CSV = Path("logs/wasserstein/wasserstein_results.csv")
+OUTPUT_FIGURE = Path("logs/wasserstein/wasserstein_scatter.png")
 
 # Fill in one Y value per dataset name (must match the names used in
 # wasserstein_log_areas.py's DATASETS list).
 Y_VALUES = {
-    "dataset_1": None,
-    "dataset_2": None,
-    "dataset_3": None,
+    'ACFR' : 0.235,
+    'Agroscope' : 0.294,
+    'APPLE MOTS' : 0.575,
+    'Deep Fruits' : 0.356,
+    'Kfuji' : 0.403,
+    'MetaFruit' : 0.614,
+    'MinneApple' : 0.630,
+    'Open Access RGBD' : 0.234,
+    'SMA' : 0.338,
+    'WSU' : 0.263,
+    'Synthetic A' : 0.378,
+    'Synthetic B' : 0.453,
+    'Synthetic C' : 0.470,
+    'SA4' : 0.456,
+    'SB4' : 0.501,
+    'SC3' : 0.521,
 }
 
 
@@ -52,20 +105,25 @@ def main() -> None:
             "No dataset names in common between wasserstein_results.csv "
             "and Y_VALUES."
         )
-
-    x = [distances[name] for name in common_names]
-    y = [Y_VALUES[name] for name in common_names]
-
+    xs = [distances[name] for name in common_names]
+    ys = [Y_VALUES[name] for name in common_names]
     fig, ax = plt.subplots(figsize=(7, 6))
-    ax.scatter(x, y, s=60)
-    for name, xi, yi in zip(common_names, x, y):
+    for x, y, c, m in zip(xs, ys, PALETTE, MARKERS):
+        ax.scatter(
+            x,
+            y,
+            s=60,
+            c=c,
+            marker=m
+        )
+    for name, xi, yi in zip(common_names, xs, ys):
         ax.annotate(name, (xi, yi), textcoords="offset points", xytext=(6, 4))
 
-    ax.set_xlabel("Wasserstein distance (log relative area vs. test set)")
-    ax.set_ylabel("Y value")
+    ax.set_xlabel("Wasserstein distance (log relative area vs. OpenIoT)")
+    ax.set_ylabel("Peak F1 Score")
 
-    if len(x) >= 2:
-        correlation, p_value = spearmanr(x, y)
+    if len(xs) >= 2:
+        correlation, p_value = spearmanr(xs, ys)
         ax.set_title(f"Spearman rho={correlation:.3f}, p={p_value:.4f}")
 
     fig.tight_layout()

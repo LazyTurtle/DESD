@@ -21,35 +21,66 @@ numbers by hand.
 """
 
 import csv
-import logging
 from pathlib import Path
 
 import numpy as np
+from tqdm import tqdm
 from scipy.stats import spearmanr, wasserstein_distance
 
+from ..training.my_logging import get_logger
 # --------------------------------------------------------------------------
 # Configuration - edit this section for your run.
 # --------------------------------------------------------------------------
 
 # Held-out test dataset: directory containing YOLO .txt label files
 # (one file per image, each line: "class x_center y_center width height").
-TEST_LABELS_DIR = Path("data/test/labels")
+TEST_LABELS_DIR = Path(r"C:\Users\Emys\Pictures\OpenIoT\labels")
 
 # Series of datasets to compare against the test set: (name, labels_dir).
 DATASETS = [
-    ("dataset_1", Path("data/dataset_1/labels")),
-    ("dataset_2", Path("data/dataset_2/labels")),
-    ("dataset_3", Path("data/dataset_3/labels")),
+    ('ACFR', Path(r"C:\Users\Emys\Pictures\apples\ACFR\labels")),
+    ('Agroscope', Path(r"C:\Users\Emys\Pictures\apples\Agroscope Apple\labels")),
+    ('APPLE MOTS', Path(r"C:\Users\Emys\Pictures\apples\APPLE MOTS\labels")),
+    ('Deep Fruits', Path(r"C:\Users\Emys\Pictures\apples\Deep Fruits\labels")),
+    ('Kfuji', Path(r"C:\Users\Emys\Pictures\apples\Kfuji\labels")),
+    ('MetaFruit', Path(r"C:\Users\Emys\Pictures\apples\MetaFruit\labels")),
+    ('MinneApple', Path(r"C:\Users\Emys\Pictures\apples\MinneApple\labels")),
+    ('Open Access RGBD', Path(r"C:\Users\Emys\Pictures\apples\Open Access RGBD\labels")),
+    ('SMA', Path(r"C:\Users\Emys\Pictures\apples\SMA\labels")),
+    ('WSU', Path(r"C:\Users\Emys\Pictures\apples\WSU\labels")),
+    ('Synthetic A', Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A\labels")),
+    ('Synthetic B', Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B\labels")),
+    ('Synthetic C', Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic C\labels")),
+    ('SA4', Path(r"C:\Users\Emys\Pictures\SyntAC\SA\SA4\labels")),
+    ('SB4', Path(r"C:\Users\Emys\Pictures\SyntAC\SB\SB4\labels")),
+    ('SC3', Path(r"C:\Users\Emys\Pictures\SyntAC\SC\SC3\labels")),
 ]
 
 # One value per dataset above, in the same order, to correlate (Spearman)
 # against the Wasserstein distances. Leave as None to skip the correlation.
-SPEARMAN_Y_VALUES = None
+SPEARMAN_Y_VALUES = [
+    0.235,
+    0.294,
+    0.575,
+    0.356,
+    0.403,
+    0.614,
+    0.630,
+    0.234,
+    0.338,
+    0.263,
+    0.378,
+    0.453,
+    0.470,
+    0.456,
+    0.501,
+    0.521,
+]
 # Example:
 # SPEARMAN_Y_VALUES = [0.812, 0.774, 0.699]
 
-LOG_FILE = Path("wasserstein_analysis.log")
-RESULTS_CSV = Path("wasserstein_results.csv")
+LOG_FILE = Path("logs/wasserstein/wasserstein_analysis.log")
+RESULTS_CSV = Path("logs/wasserstein/wasserstein_results.csv")
 
 # Guard against log(0) for degenerate zero-area boxes.
 AREA_EPSILON = 1e-12
@@ -57,18 +88,8 @@ AREA_EPSILON = 1e-12
 # --------------------------------------------------------------------------
 
 
-def setup_logger(log_file: Path) -> logging.Logger:
-    logger = logging.getLogger("wasserstein_log_areas")
-    logger.setLevel(logging.INFO)
-    logger.handlers.clear()
-
-    file_handler = logging.FileHandler(log_file, mode="w")
-    stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
-    for handler in (file_handler, stream_handler):
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-
+def setup_logger(log_file: Path):
+    logger = get_logger("wasserstein_log_areas", out_folder='logs/wasserstein')
     return logger
 
 
@@ -79,7 +100,7 @@ def collect_relative_areas(labels_dir: Path) -> np.ndarray:
         raise FileNotFoundError(f"Labels directory not found: {labels_dir}")
 
     areas = []
-    for label_file in sorted(labels_dir.glob("*.txt")):
+    for label_file in tqdm(sorted(labels_dir.glob("*.txt")), f'Collecting areas from {labels_dir.parent.stem}'):
         with open(label_file) as f:
             for line_no, line in enumerate(f, start=1):
                 line = line.strip()
