@@ -59,14 +59,6 @@ PD_PLOT_LABELS_ANALYSIS =              Path(r'data\E1\plots_labels')
 #################### E2
 ################################################################################
 
-SYNTH_A = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A")
-SYNTH_B = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B")
-SYNTH_C = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic C")
-
-SYNTH_AS = Path(r"C:\Users\Emys\Pictures\SyntAC\SA")
-SYNTH_BS = Path(r"C:\Users\Emys\Pictures\SyntAC\SB")
-SYNTH_CS = Path(r"C:\Users\Emys\Pictures\SyntAC\SC")
-
 HYP_SA =[
     r'config\hyp\E2\SA0.yaml',
     r'config\hyp\E2\SA1.yaml',
@@ -141,25 +133,25 @@ HYP_SMC =[
     r'config\hyp\E3\SMC4.yaml',
 ]
 
-SMA_EVALUATION_FOLDER =                 Path(r'data\synA_minne\evaluation')
-SMA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synA_minne\folds_training')
-SMA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synA_minne\folds_evaluation')
-SMA_PLOT_TRAINING_OUTPUT =              Path(r'data\synA_minne\plots_train')
-SMA_PLOT_EVALUATION_OUTPUT =            Path(r'data\synA_minne\plots_eval')
+SMA_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synA_minne\evaluation')
+SMA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synA_minne\folds_training')
+SMA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synA_minne\folds_evaluation')
+SMA_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synA_minne\plots_train')
+SMA_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synA_minne\plots_eval')
 
 
-SMB_EVALUATION_FOLDER =                 Path(r'data\synB_minne\evaluation')
-SMB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synB_minne\folds_training')
-SMB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synB_minne\folds_evaluation')
-SMB_PLOT_TRAINING_OUTPUT =              Path(r'data\synB_minne\plots_train')
-SMB_PLOT_EVALUATION_OUTPUT =            Path(r'data\synB_minne\plots_eval')
+SMB_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synB_minne\evaluation')
+SMB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synB_minne\folds_training')
+SMB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synB_minne\folds_evaluation')
+SMB_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synB_minne\plots_train')
+SMB_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synB_minne\plots_eval')
 
 
-SMC_EVALUATION_FOLDER =                 Path(r'data\synC_minne\evaluation')
-SMC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synC_minne\folds_training')
-SMC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synC_minne\folds_evaluation')
-SMC_PLOT_TRAINING_OUTPUT =              Path(r'data\synC_minne\plots_train')
-SMC_PLOT_EVALUATION_OUTPUT =            Path(r'data\synC_minne\plots_eval')
+SMC_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synC_minne\evaluation')
+SMC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synC_minne\folds_training')
+SMC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synC_minne\folds_evaluation')
+SMC_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synC_minne\plots_train')
+SMC_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synC_minne\plots_eval')
 
 
 ################################################################################
@@ -278,29 +270,37 @@ def Experiment1():
     )
 
 def Experiment2():
-    def subsample_datasets():
-        subsample.subsample_dataset(SYNTH_A, SYNTH_AS / 'SA0', 1)
-        subsample.subsample_dataset(SYNTH_A, SYNTH_AS / 'SA1', 2)
-        subsample.subsample_dataset(SYNTH_A, SYNTH_AS / 'SA2', 4)
-        subsample.subsample_dataset(SYNTH_A, SYNTH_AS / 'SA3', 8)
-        subsample.subsample_dataset(SYNTH_A, SYNTH_AS / 'SA4', 16)
+    A = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A")
+    B = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B")
+    C = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic C")
+    def produce_datasets():
 
-        subsample.subsample_dataset(SYNTH_B, SYNTH_BS / 'SB0', 1)
-        subsample.subsample_dataset(SYNTH_B, SYNTH_BS / 'SB1', 2)
-        subsample.subsample_dataset(SYNTH_B, SYNTH_BS / 'SB2', 4)
-        subsample.subsample_dataset(SYNTH_B, SYNTH_BS / 'SB3', 8)
-        subsample.subsample_dataset(SYNTH_B, SYNTH_BS / 'SB4', 16)
+        SA = Path(r"data\EXPERIMENT2\SA")
+        SB = Path(r"data\EXPERIMENT2\SB")
+        SC = Path(r"data\EXPERIMENT2\SC")
 
-        subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC0', 1)
-        subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC1', 2)
-        subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC2', 4)
-        subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC3', 8)
-        subsample.subsample_dataset(SYNTH_C, SYNTH_CS / 'SC4', 16)
+        subsample.subsample_dataset(A, SA / 'SA0', 1)
+        subsample.subsample_dataset(A, SA / 'SA1', 2)
+        subsample.subsample_dataset(A, SA / 'SA2', 4)
+        subsample.subsample_dataset(A, SA / 'SA3', 8)
+        subsample.subsample_dataset(A, SA / 'SA4', 16)
+
+        subsample.subsample_dataset(B, SB / 'SB0', 1)
+        subsample.subsample_dataset(B, SB / 'SB1', 2)
+        subsample.subsample_dataset(B, SB / 'SB2', 4)
+        subsample.subsample_dataset(B, SB / 'SB3', 8)
+        subsample.subsample_dataset(B, SB / 'SB4', 16)
+
+        subsample.subsample_dataset(C, SC / 'SC0', 1)
+        subsample.subsample_dataset(C, SC / 'SC1', 2)
+        subsample.subsample_dataset(C, SC / 'SC2', 4)
+        subsample.subsample_dataset(C, SC / 'SC3', 8)
+        subsample.subsample_dataset(C, SC / 'SC4', 16)
 
 
-    analyze_datasets([SYNTH_A, SYNTH_B, SYNTH_C], SD_PLOT_LABELS_ANALYSIS)
+    analyze_datasets([A, B, C], SD_PLOT_LABELS_ANALYSIS)
 
-    subsample_datasets()
+    produce_datasets()
 
     trainX(
         HYP_SA,
@@ -331,17 +331,42 @@ def Experiment2():
 
 
 def Experiment3():
-    def reduce_dataset():
+    def produce_datasets():
         minne = Path(r"C:\Users\Emys\Pictures\apples\MinneApple")
         output = Path(r"data\EXPERIMENT3\minne")
-        subsample.reduce_dataset(minne, output / 'M0', int(3840 / 4))
-        subsample.reduce_dataset(minne, output / 'M1', int(1920 / 4))
-        subsample.reduce_dataset(minne, output / 'M2', int(960 / 4))
-        subsample.reduce_dataset(minne, output / 'M3', int(480 / 4))
-        subsample.reduce_dataset(minne, output / 'M4', int(240 / 4))
+        subsample.reduce_dataset(minne, output / 'M0', int(3840 * (1/5)))
+        subsample.reduce_dataset(minne, output / 'M1', int(1920 * (1/5)))
+        subsample.reduce_dataset(minne, output / 'M2', int(960 * (1/5)))
+        subsample.reduce_dataset(minne, output / 'M3', int(480 * (1/5)))
+        subsample.reduce_dataset(minne, output / 'M4', int(240 * (1/5)))
+
+        A = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A")
+        A_out = Path(r"data\EXPERIMENT3\A")
+        subsample.reduce_dataset(A, A_out / 'A0', int(3840 * (4/5)))
+        subsample.reduce_dataset(A, A_out / 'A1', int(1920 * (4/5)))
+        subsample.reduce_dataset(A, A_out / 'A2', int(960 * (4/5)))
+        subsample.reduce_dataset(A, A_out / 'A3', int(480 * (4/5)))
+        subsample.reduce_dataset(A, A_out / 'A4', int(240 * (4/5)))
+
+        B = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B")
+        B_out = Path(r"data\EXPERIMENT3\B")
+        subsample.reduce_dataset(B, B_out / 'B0', int(3840 * (4/5)))
+        subsample.reduce_dataset(B, B_out / 'B1', int(1920 * (4/5)))
+        subsample.reduce_dataset(B, B_out / 'B2', int(960 * (4/5)))
+        subsample.reduce_dataset(B, B_out / 'B3', int(480 * (4/5)))
+        subsample.reduce_dataset(B, B_out / 'B4', int(240 * (4/5)))
+
+        C = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic C")
+        C_out = Path(r"data\EXPERIMENT3\C")
+        subsample.reduce_dataset(C, C_out / 'C0', int(3840 * (4/5)))
+        subsample.reduce_dataset(C, C_out / 'C1', int(1920 * (4/5)))
+        subsample.reduce_dataset(C, C_out / 'C2', int(960 * (4/5)))
+        subsample.reduce_dataset(C, C_out / 'C3', int(480 * (4/5)))
+        subsample.reduce_dataset(C, C_out / 'C4', int(240 * (4/5)))
+
     
-    reduce_dataset()
-    # after this, merge the reduced minne dataset with copies of the synthetic datasets of the corresponding size tier
+    produce_datasets()
+    # after this, merge the reduced minne dataset with the reduced copies of the synthetic datasets of the corresponding size tier
     return
 
     trainX(

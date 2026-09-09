@@ -1,6 +1,6 @@
 ############ TRAINING
 model: yolo26m.pt
-data: C:\Users\Emys\Pictures\SyntAC\SMA\SMA2\data.yaml
+data: D:\workspace\DESD\data\EXPERIMENT3\A\SMA2\data.yaml
 epochs: 300
 time: None
 patience: 100
@@ -11,7 +11,7 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/synA_minne/training/SMA/SMA2
+project: data/EXPERIMENT3/synA_minne/training/SMA/SMA2
 name: SMA2
 exist_ok: False
 pretrained: True
