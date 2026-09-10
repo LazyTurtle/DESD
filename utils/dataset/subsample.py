@@ -2,6 +2,7 @@
 import shutil
 from pathlib import Path
 from tqdm import tqdm
+from random import shuffle
 
 def reduce_dataset(dataset: str|Path, output_dataset: str|Path, n:int, overwrite:bool=False) -> list[Path]:
     """
@@ -78,3 +79,34 @@ def subsample_dataset(dataset: str|Path, output_dataset: str|Path, n:int, overwr
     print(f'Copied {len(copied_images)} images from {in_images} to {out_images}')
     print(f'Copied {len(copied_labels)} labels from {in_labels} to {out_labels}')
     return copied_images
+
+def random_subsample_dataset(dataset: str|Path, output_dataset: str|Path, n:int, overwrite:bool=False) -> list[Path]:
+
+    dataset = Path(dataset)
+    output_dataset = Path(output_dataset)
+    if output_dataset.exists() and not overwrite:
+        print(f'Dataset {output_dataset} already exists.')
+        return []
+    if output_dataset.exists():
+        shutil.rmtree(output_dataset)
+
+    in_images = dataset / 'images'
+    in_labels = dataset / 'labels'
+    out_images = output_dataset / 'images'
+    out_labels = output_dataset / 'labels'
+    out_images.mkdir(parents=True, exist_ok=True)
+    out_labels.mkdir(parents=True, exist_ok=True)
+
+    images = list(in_images.glob('*.*'))
+    shuffle(images)
+    images_to_copy = images[:n]
+    out = list()
+    for image in tqdm(images_to_copy):
+
+        dest_img = out_images / image.name
+        shutil.copy2(image, dest_img)
+        out.append(dest_img)
+
+        label = in_labels / (image.stem + ".txt")
+        shutil.copy2(label, out_labels / label.name)
+    return out
