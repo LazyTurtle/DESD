@@ -1,6 +1,6 @@
 ############ TRAINING
 model: yolo26m.pt
-data: C:\Users\Emys\Pictures\SyntAC\SF\SF02\data.yaml
+data: D:\workspace\DESD\data\EXPERIMENT4\SF\F02\data.yaml
 epochs: 300
 time: None
 patience: 100
@@ -11,7 +11,7 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/E4/training/SF\SF02
+project: data/EXPERIMENT4/training/SF\SF02
 name: SF02
 exist_ok: False
 pretrained: True

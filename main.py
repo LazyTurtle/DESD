@@ -398,7 +398,15 @@ def Experiment3():
 
 
 def Experiment4():
-    def reduce_dataset():
+    def produce_datasets():
+        dataset = Path(r"C:\Users\Emys\Pictures\SyntAC\SC\SC3")
+        output = Path(r"data\EXPERIMENT4\C")
+        subsample.reduce_dataset(dataset, output / 'C50', round(480 * (1 - 0.50)))
+        subsample.reduce_dataset(dataset, output / 'C25', round(480 * (1 - 0.25)))
+        subsample.reduce_dataset(dataset, output / 'C10', round(480 * (1 - 0.10)))
+        subsample.reduce_dataset(dataset, output / 'C05', round(480 * (1 - 0.05)))
+        subsample.reduce_dataset(dataset, output / 'C02', round(480 * (1 - 0.02)))
+
         dataset = Path(r"C:\Users\Emys\Pictures\apples\MinneApple")
         output = Path(r"data\EXPERIMENT4\minne")
         subsample.reduce_dataset(dataset, output / 'M50', round(480 * 0.50))
@@ -423,8 +431,8 @@ def Experiment4():
         subsample.reduce_dataset(dataset, output / 'N05', round(480 * 0.05))
         subsample.reduce_dataset(dataset, output / 'N02', round(480 * 0.02))
     
-    reduce_dataset()
-    # after this, merge the datasets with copies of SC3
+    produce_datasets()
+    # after this, merge the datasets with the corresponding subsets of SC3
     return
 
     trainX(
