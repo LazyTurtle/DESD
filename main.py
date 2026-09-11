@@ -12,6 +12,7 @@ from utils.plotting import plot_results_kfold
 from utils.plotting import plot_labels
 
 from utils.dataset import subsample
+from utils.dataset import duplicates
 
 FOLDS = 5
 
@@ -462,6 +463,91 @@ def Experiment4():
         SF_PLOT_EVALUATION_OUTPUT
     )
 
+def CalculateNearDuplicates():
+    logs = ['|Dataset Name|pHash|DINO|']
+    datasets = [
+        r"C:\Users\Emys\Pictures\apples\ACFR",
+        r"C:\Users\Emys\Pictures\apples\Agroscope Apple",
+        r"C:\Users\Emys\Pictures\apples\APPLE MOTS",
+        r"C:\Users\Emys\Pictures\apples\Deep Fruits",
+        r"C:\Users\Emys\Pictures\apples\Kfuji",
+        r"C:\Users\Emys\Pictures\apples\MetaFruit",
+        r"C:\Users\Emys\Pictures\apples\MinneApple",
+        r"C:\Users\Emys\Pictures\apples\Open Access RGBD",
+        r"C:\Users\Emys\Pictures\apples\SMA",
+        r"C:\Users\Emys\Pictures\apples\WSU",
+        r"C:\Users\Emys\Pictures\OpenIoT",
+        r"C:\Users\Emys\Pictures\SyntAC\Synthetic C",
+        r"C:\Users\Emys\Pictures\SyntAC\Synthetic A",
+        r"C:\Users\Emys\Pictures\SyntAC\Synthetic B",
+        r"C:\Users\Emys\Pictures\SyntAC\SA\SA0",
+        r"C:\Users\Emys\Pictures\SyntAC\SA\SA1",
+        r"C:\Users\Emys\Pictures\SyntAC\SA\SA2",
+        r"C:\Users\Emys\Pictures\SyntAC\SA\SA3",
+        r"C:\Users\Emys\Pictures\SyntAC\SA\SA4",
+        r"C:\Users\Emys\Pictures\SyntAC\SB\SB0",
+        r"C:\Users\Emys\Pictures\SyntAC\SB\SB1",
+        r"C:\Users\Emys\Pictures\SyntAC\SB\SB2",
+        r"C:\Users\Emys\Pictures\SyntAC\SB\SB3",
+        r"C:\Users\Emys\Pictures\SyntAC\SB\SB4",
+        r"C:\Users\Emys\Pictures\SyntAC\SC\SC0",
+        r"C:\Users\Emys\Pictures\SyntAC\SC\SC1",
+        r"C:\Users\Emys\Pictures\SyntAC\SC\SC2",
+        r"C:\Users\Emys\Pictures\SyntAC\SC\SC3",
+        r"C:\Users\Emys\Pictures\SyntAC\SC\SC4",
+        r"data\EXPERIMENT2\SAb\SAb1",
+        r"data\EXPERIMENT2\SAb\SAb2",
+        r"data\EXPERIMENT2\SAb\SAb3",
+        r"data\EXPERIMENT2\SAb\SAb4",
+        r"data\EXPERIMENT2\SBb\SBb1",
+        r"data\EXPERIMENT2\SBb\SBb2",
+        r"data\EXPERIMENT2\SBb\SBb3",
+        r"data\EXPERIMENT2\SBb\SBb4",
+        r"data\EXPERIMENT2\SCb\SCb1",
+        r"data\EXPERIMENT2\SCb\SCb2",
+        r"data\EXPERIMENT2\SCb\SCb3",
+        r"data\EXPERIMENT2\SCb\SCb4",
+        r"data\EXPERIMENT3\A\SMA0",
+        r"data\EXPERIMENT3\A\SMA1",
+        r"data\EXPERIMENT3\A\SMA2",
+        r"data\EXPERIMENT3\A\SMA3",
+        r"data\EXPERIMENT3\A\SMA4",
+        r"data\EXPERIMENT3\B\SMB0",
+        r"data\EXPERIMENT3\B\SMB1",
+        r"data\EXPERIMENT3\B\SMB2",
+        r"data\EXPERIMENT3\B\SMB3",
+        r"data\EXPERIMENT3\B\SMB4",
+        r"data\EXPERIMENT3\C\SMC0",
+        r"data\EXPERIMENT3\C\SMC1",
+        r"data\EXPERIMENT3\C\SMC2",
+        r"data\EXPERIMENT3\C\SMC3",
+        r"data\EXPERIMENT3\C\SMC4",
+        r"data\EXPERIMENT4\SF\F00",
+        r"data\EXPERIMENT4\SF\F02",
+        r"data\EXPERIMENT4\SF\F05",
+        r"data\EXPERIMENT4\SF\F10",
+        r"data\EXPERIMENT4\SF\F25",
+        r"data\EXPERIMENT4\SF\F50",
+        r"data\EXPERIMENT4\SM\M00",
+        r"data\EXPERIMENT4\SM\M02",
+        r"data\EXPERIMENT4\SM\M05",
+        r"data\EXPERIMENT4\SM\M10",
+        r"data\EXPERIMENT4\SM\M25",
+        r"data\EXPERIMENT4\SM\M50",
+        r"data\EXPERIMENT4\SN\N00",
+        r"data\EXPERIMENT4\SN\N02",
+        r"data\EXPERIMENT4\SN\N05",
+        r"data\EXPERIMENT4\SN\N10",
+        r"data\EXPERIMENT4\SN\N25",
+        r"data\EXPERIMENT4\SN\N50",
+    ]
+    for dataset in datasets:
+        dataset_name = Path(dataset).stem
+        rates = duplicates.compute_near_duplicates(dataset)
+        logs.append(f"|{dataset_name}|{rates[0]:.1%}|{rates[1]:.1%}|")
+        
+    with open('data/near_duplicate_report.md', 'w') as report:
+        report.writelines("\n".join(logs))
 
 if __name__ == "__main__":
     logger = my_logging.get_logger('ExperimentPipeline', out_folder='logs/pipeline')
@@ -476,6 +562,8 @@ if __name__ == "__main__":
         logger.info('Experiment 3 complete.')
         Experiment4()
         logger.info('Experiment 4 complete.')
+
+        CalculateNearDuplicates()
 
     except KeyboardInterrupt:
         logger.info("User interrupted the program")
