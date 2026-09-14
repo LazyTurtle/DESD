@@ -4,6 +4,7 @@ from pathlib import Path
 
 import csv
 from statistics import mean, stdev
+from math import isnan
 
 # Configuration
 PARENT_FOLDER = r"D:\workspace\yolo_training\data\training\PUBLIC_DATASETS\ACFR"  # Replace with your folder path
@@ -38,10 +39,13 @@ def aggregate_fold_results(folds_root:str|Path, output_folder:str|Path|None=None
                     if val is not None and val.strip() != "":
                         try:
                             float_val = float(val)
+                            if isnan(float_val):
+                                print(f'At row {row_idx} I could not convert value {val} of column {col_name} to float, skipping data.')
+                                continue
                             key = (row_idx, col_name)
                             data_grid.setdefault(key, []).append(float_val)
                         except ValueError:
-                            continue
+                            print(f'At row {row_idx} I could not convert value {val} of column {col_name} to float.')
 
     if not fieldnames_order:
         print("No valid CSV files found or files were empty.")
