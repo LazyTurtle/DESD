@@ -248,7 +248,7 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
     ax.set_xlabel(r"Labels' area as % of the whole image.", fontsize=TEXT_FONTSIZE)
 
     import matplotlib.ticker as mtick
-    tick_format = mtick.PercentFormatter(decimals=3, symbol="%")
+    tick_format = mtick.PercentFormatter(symbol="%")
     ax.xaxis.set_major_formatter(tick_format)
 
     plt.xticks(fontsize = TEXT_FONTSIZE)

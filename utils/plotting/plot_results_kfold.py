@@ -17,8 +17,12 @@ LINE_STYLES = ['solid', "dotted", (0, (3, 1, 1, 1, 1, 1)), "dashed", 'dashdot']
 FIG_SIZE = (16, 9)
 X_LABEL = 'Epoch'
 
-TITLE_FONTSIZE = 24
-TEXT_FONTSIZE = 20
+TITLE_FONTSIZE = 32
+TEXT_FONTSIZE = 28
+DPI = 600
+
+MAX_LEGEND_COLUMNS = 3
+TICK_ROTATION = 30
 
 def load_csv_data(filepath):
     data = {}
@@ -122,17 +126,19 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        legend_columns = min(5, len(models))
+        legend_columns = min(MAX_LEGEND_COLUMNS, len(models))
+        legend_rows = int(len(models) / legend_columns) + 1
+        legend_y_position = -0.08 * legend_rows
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
             ncol=legend_columns,
-            bbox_to_anchor=(0.5, -0.12),
+            bbox_to_anchor=(0.5, legend_y_position),
         )
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
-        plt.savefig(save_path, dpi=800, bbox_inches="tight")
+        plt.savefig(save_path, dpi=DPI, bbox_inches="tight")
         plt.close()
         print(f'Saved {save_path}')
 
@@ -177,17 +183,19 @@ def plot_metrics(models_data:dict[str,dict], output_folder:str|Path):
         plt.ylabel(metric, fontsize=TEXT_FONTSIZE)
         plt.yticks(fontsize = TEXT_FONTSIZE)
         plt.xticks(fontsize = TEXT_FONTSIZE)
-        legend_columns = min(5, len(models))
+        legend_columns = min(MAX_LEGEND_COLUMNS, len(models))
+        legend_rows = int(len(models) / legend_columns) + 1
+        legend_y_position = -0.08 * legend_rows
         ax.legend(
             fontsize=TEXT_FONTSIZE,
             loc='lower center',
             ncol=legend_columns,
-            bbox_to_anchor=(0.5, -0.12),
+            bbox_to_anchor=(0.5, legend_y_position),
         )
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.tight_layout()
         save_path = output_folder.joinpath(title+'.png')
-        plt.savefig(save_path, dpi=800, bbox_inches="tight")
+        plt.savefig(save_path, dpi=DPI, bbox_inches="tight")
         plt.close()
         print(f'Saved {save_path}')
 
@@ -282,12 +290,12 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
     title = "mAP Values per Run by Confidence Level"
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
-    plt.xticks(x_indices, run_names, ha="right")
+    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE, rotation=TICK_ROTATION)
     plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
     save_path = output_folder.joinpath(title+'.png')
-    plt.savefig(save_path, dpi=800, bbox_inches="tight")
+    plt.savefig(save_path, dpi=DPI, bbox_inches="tight")
     plt.close()
     print(f'Saved {save_path}')
 
@@ -350,12 +358,12 @@ def plot_map(root_folder:str|Path, output_folder:str|Path):
     title = "mAP Values per Run with Standard Deviation"
     plt.title(title, fontsize=TITLE_FONTSIZE)
     plt.yticks(fontsize = TEXT_FONTSIZE)
-    plt.xticks(x_indices, run_names, ha="right")
+    plt.xticks(x_indices, run_names, ha="right", fontsize=TEXT_FONTSIZE, rotation=TICK_ROTATION)
     plt.legend(fontsize=TEXT_FONTSIZE)
     plt.grid(axis="y", linestyle="--", alpha=0.6)
     plt.tight_layout()
     save_path = output_folder.joinpath(title+'.png')
-    plt.savefig(save_path, dpi=800, bbox_inches="tight")
+    plt.savefig(save_path, dpi=DPI, bbox_inches="tight")
     plt.close()
     print(f'Saved {save_path}')
 
