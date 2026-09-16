@@ -49,12 +49,12 @@ PUBLIC_DATASETS = [
 OPEN_IOT_DATASET = r"C:\Users\Emys\Pictures\OpenIoT"
 OPEN_IOT_EVALUATION_DATA = r"C:\Users\Emys\Pictures\OpenIoT\data.yaml"
 
-PD_EVALUATION_FOLDER =                 Path(r'data\E1\evaluation')
-PD_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E1\folds_training')
-PD_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E1\folds_evaluation')
-PD_PLOT_TRAINING_OUTPUT =              Path(r'data\E1\plots_train')
-PD_PLOT_EVALUATION_OUTPUT =            Path(r'data\E1\plots_eval')
-PD_PLOT_LABELS_ANALYSIS =              Path(r'data\E1\plots_labels')
+PD_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT1\evaluation')
+PD_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT1\folds_training')
+PD_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT1\folds_evaluation')
+PD_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT1\plots_train')
+PD_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT1\plots_eval')
+PD_PLOT_LABELS_ANALYSIS =              Path(r'data\EXPERIMENT1\plots_labels')
 
 ################################################################################
 #################### E2
@@ -84,33 +84,31 @@ HYP_SC =[
     r'config\hyp\E2\SC4.yaml',
 ]
 
-SD_PLOT_LABELS_ANALYSIS =               Path(r'data\syn\plots_labels')
+SD_PLOT_LABELS_ANALYSIS =               Path(r'data\EXPERIMENT2\plots_labels')
 
-SDA_EVALUATION_FOLDER =                 Path(r'data\synA\evaluation')
-SDA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synA\folds_training')
-SDA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synA\folds_evaluation')
-SDA_PLOT_TRAINING_OUTPUT =              Path(r'data\synA\plots_train')
-SDA_PLOT_EVALUATION_OUTPUT =            Path(r'data\synA\plots_eval')
-
-
-SDB_EVALUATION_FOLDER =                 Path(r'data\synB\evaluation')
-SDB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synB\folds_training')
-SDB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synB\folds_evaluation')
-SDB_PLOT_TRAINING_OUTPUT =              Path(r'data\synB\plots_train')
-SDB_PLOT_EVALUATION_OUTPUT =            Path(r'data\synB\plots_eval')
+SDA_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT2\A\evaluation')
+SDA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT2\A\folds_training')
+SDA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT2\A\folds_evaluation')
+SDA_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT2\A\plots_train')
+SDA_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT2\A\plots_eval')
 
 
-SDC_EVALUATION_FOLDER =                 Path(r'data\synC\evaluation')
-SDC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\synC\folds_training')
-SDC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\synC\folds_evaluation')
-SDC_PLOT_TRAINING_OUTPUT =              Path(r'data\synC\plots_train')
-SDC_PLOT_EVALUATION_OUTPUT =            Path(r'data\synC\plots_eval')
+SDB_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT2\B\evaluation')
+SDB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT2\B\folds_training')
+SDB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT2\B\folds_evaluation')
+SDB_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT2\B\plots_train')
+SDB_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT2\B\plots_eval')
+
+
+SDC_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT2\C\evaluation')
+SDC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT2\C\folds_training')
+SDC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT2\C\folds_evaluation')
+SDC_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT2\C\plots_train')
+SDC_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT2\C\plots_eval')
 
 ################################################################################
 #################### E2b
 ################################################################################
-
-SD_B_PLOT_LABELS_ANALYSIS =               Path(r'data\EXPERIMENT2B\plots_labels')
 
 SDA_B_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT2B\A\evaluation')
 SDA_B_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT2B\A\folds_training')
@@ -366,6 +364,7 @@ def Experiment2():
 
     produce_datasets()
 
+    # EXPERIMENT E2a with controlled downsampling of the synthetic datasets
     trainX(
         HYP_SA,
         SDA_AGGREGATED_TRAINING_RESULTS,
@@ -394,20 +393,100 @@ def Experiment2():
     )
 
     # EXPERIMENT E2b with random downsampling of the synthetic datasets
-    train_random_subsample(r'config\hyp\E2b\SA1.yaml', SDA_B_AGGREGATED_TRAINING_RESULTS, SDA_B_EVALUATION_FOLDER, SDA_B_AGGREGATED_EVALUATION_RESULTS, int(3840/2))
-    train_random_subsample(r'config\hyp\E2b\SA2.yaml', SDA_B_AGGREGATED_TRAINING_RESULTS, SDA_B_EVALUATION_FOLDER, SDA_B_AGGREGATED_EVALUATION_RESULTS, int(3840/4))
-    train_random_subsample(r'config\hyp\E2b\SA3.yaml', SDA_B_AGGREGATED_TRAINING_RESULTS, SDA_B_EVALUATION_FOLDER, SDA_B_AGGREGATED_EVALUATION_RESULTS, int(3840/8))
-    train_random_subsample(r'config\hyp\E2b\SA4.yaml', SDA_B_AGGREGATED_TRAINING_RESULTS, SDA_B_EVALUATION_FOLDER, SDA_B_AGGREGATED_EVALUATION_RESULTS, int(3840/16))
 
-    train_random_subsample(r'config\hyp\E2b\SB1.yaml', SDB_B_AGGREGATED_TRAINING_RESULTS, SDB_B_EVALUATION_FOLDER, SDB_B_AGGREGATED_EVALUATION_RESULTS, int(3840/2))
-    train_random_subsample(r'config\hyp\E2b\SB2.yaml', SDB_B_AGGREGATED_TRAINING_RESULTS, SDB_B_EVALUATION_FOLDER, SDB_B_AGGREGATED_EVALUATION_RESULTS, int(3840/4))
-    train_random_subsample(r'config\hyp\E2b\SB3.yaml', SDB_B_AGGREGATED_TRAINING_RESULTS, SDB_B_EVALUATION_FOLDER, SDB_B_AGGREGATED_EVALUATION_RESULTS, int(3840/8))
-    train_random_subsample(r'config\hyp\E2b\SB4.yaml', SDB_B_AGGREGATED_TRAINING_RESULTS, SDB_B_EVALUATION_FOLDER, SDB_B_AGGREGATED_EVALUATION_RESULTS, int(3840/16))
+    train_random_subsample(
+        r'config\hyp\E2b\SA1.yaml',
+        SDA_B_AGGREGATED_TRAINING_RESULTS,
+        SDA_B_EVALUATION_FOLDER,
+        SDA_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/2),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SA2.yaml',
+        SDA_B_AGGREGATED_TRAINING_RESULTS,
+        SDA_B_EVALUATION_FOLDER,
+        SDA_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/4),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SA3.yaml',
+        SDA_B_AGGREGATED_TRAINING_RESULTS,
+        SDA_B_EVALUATION_FOLDER,
+        SDA_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/8),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SA4.yaml',
+        SDA_B_AGGREGATED_TRAINING_RESULTS,
+        SDA_B_EVALUATION_FOLDER,
+        SDA_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/16),
+    )
+    plot_results_kfold.plot(SDA_B_AGGREGATED_TRAINING_RESULTS, SDA_B_PLOT_TRAINING_OUTPUT)
+    plot_results_kfold.plot(SDA_B_AGGREGATED_EVALUATION_RESULTS, SDA_B_PLOT_EVALUATION_OUTPUT)
+    
+    train_random_subsample(
+        r'config\hyp\E2b\SB1.yaml',
+        SDB_B_AGGREGATED_TRAINING_RESULTS,
+        SDB_B_EVALUATION_FOLDER,
+        SDB_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/2),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SB2.yaml',
+        SDB_B_AGGREGATED_TRAINING_RESULTS,
+        SDB_B_EVALUATION_FOLDER,
+        SDB_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/4),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SB3.yaml',
+        SDB_B_AGGREGATED_TRAINING_RESULTS,
+        SDB_B_EVALUATION_FOLDER,
+        SDB_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/8),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SB4.yaml',
+        SDB_B_AGGREGATED_TRAINING_RESULTS,
+        SDB_B_EVALUATION_FOLDER,
+        SDB_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/16),
+    )
+    plot_results_kfold.plot(SDB_B_AGGREGATED_TRAINING_RESULTS, SDB_B_PLOT_TRAINING_OUTPUT)
+    plot_results_kfold.plot(SDB_B_AGGREGATED_EVALUATION_RESULTS, SDB_B_PLOT_EVALUATION_OUTPUT)
 
-    train_random_subsample(r'config\hyp\E2b\SC1.yaml', SDC_B_AGGREGATED_TRAINING_RESULTS, SDC_B_EVALUATION_FOLDER, SDC_B_AGGREGATED_EVALUATION_RESULTS, int(3840/2))
-    train_random_subsample(r'config\hyp\E2b\SC2.yaml', SDC_B_AGGREGATED_TRAINING_RESULTS, SDC_B_EVALUATION_FOLDER, SDC_B_AGGREGATED_EVALUATION_RESULTS, int(3840/4))
-    train_random_subsample(r'config\hyp\E2b\SC3.yaml', SDC_B_AGGREGATED_TRAINING_RESULTS, SDC_B_EVALUATION_FOLDER, SDC_B_AGGREGATED_EVALUATION_RESULTS, int(3840/8))
-    train_random_subsample(r'config\hyp\E2b\SC4.yaml', SDC_B_AGGREGATED_TRAINING_RESULTS, SDC_B_EVALUATION_FOLDER, SDC_B_AGGREGATED_EVALUATION_RESULTS, int(3840/16))
+    train_random_subsample(
+        r'config\hyp\E2b\SC1.yaml',
+        SDC_B_AGGREGATED_TRAINING_RESULTS,
+        SDC_B_EVALUATION_FOLDER,
+        SDC_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/2),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SC2.yaml',
+        SDC_B_AGGREGATED_TRAINING_RESULTS,
+        SDC_B_EVALUATION_FOLDER,
+        SDC_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/4),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SC3.yaml',
+        SDC_B_AGGREGATED_TRAINING_RESULTS,
+        SDC_B_EVALUATION_FOLDER,
+        SDC_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/8),
+    )
+    train_random_subsample(
+        r'config\hyp\E2b\SC4.yaml',
+        SDC_B_AGGREGATED_TRAINING_RESULTS,
+        SDC_B_EVALUATION_FOLDER,
+        SDC_B_AGGREGATED_EVALUATION_RESULTS,
+        int(3840/16),
+    )
+    plot_results_kfold.plot(SDC_B_AGGREGATED_TRAINING_RESULTS, SDC_B_PLOT_TRAINING_OUTPUT)
+    plot_results_kfold.plot(SDC_B_AGGREGATED_EVALUATION_RESULTS, SDC_B_PLOT_EVALUATION_OUTPUT)
+
 
 def Experiment3():
     def produce_datasets():
