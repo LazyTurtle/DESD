@@ -22,9 +22,9 @@ PALETTE = [
     '#BBBBBB',
 ] * 2
 FIGURE_SIZE = (16, 9)
-TITLE_FONTSIZE = 24
-TEXT_FONTSIZE = 20
-
+TITLE_FONTSIZE = 32
+TEXT_FONTSIZE = 28
+DPI = 600
 
 def get_logger():
     return my_logging.get_logger("PlotsLogger", my_logging.logging.INFO, LOGS_FOLDER)
@@ -72,7 +72,7 @@ def plot_labels_distribution(datasets:list[str]|list[Path], show:bool=False, out
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -117,7 +117,7 @@ def plot_instances(datasets:list[str]|list[Path], show:bool=False, out_folder:st
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -187,7 +187,7 @@ def plot_mean_widths(datasets:list[str]|list[Path], show:bool=False, out_folder:
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -255,7 +255,7 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -317,7 +317,7 @@ def plot_mean_heights(datasets:list[str]|list[Path], show:bool=False, out_folder
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -377,7 +377,7 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
@@ -421,7 +421,7 @@ def plot_number_of_images_per_dataset(datasets:list[str]|list[Path], show:bool=F
     if out_folder is not None:
         path = f"{out_folder}/{plot_title}.png"
         logger.debug(f"Saving image to path: {path}")
-        plt.savefig(path, dpi=300, bbox_inches='tight')
+        plt.savefig(path, dpi=DPI, bbox_inches='tight')
     if show:
         logger.debug("Showing plot")
         plt.show()
