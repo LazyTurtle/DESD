@@ -25,6 +25,7 @@ FIGURE_SIZE = (16, 9)
 TITLE_FONTSIZE = 32
 TEXT_FONTSIZE = 28
 DPI = 600
+TICK_ROTATION = 30
 
 def get_logger():
     return my_logging.get_logger("PlotsLogger", my_logging.logging.INFO, LOGS_FOLDER)
@@ -110,8 +111,8 @@ def plot_instances(datasets:list[str]|list[Path], show:bool=False, out_folder:st
     ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
     ax.set_ylabel("Number of instances", fontsize=TEXT_FONTSIZE)
     # ax.set_xlabel(fontsize=TEXT_FONTSIZE)
-    # plt.yticks(fontsize = TEXT_FONTSIZE)
-    # plt.xticks(fontsize = TEXT_FONTSIZE)
+    plt.tick_params(axis="y",labelsize=TEXT_FONTSIZE)
+    plt.tick_params(axis="x",labelsize=TEXT_FONTSIZE, rotation=TICK_ROTATION, rotation_mode="xtick")
     plt.grid(visible=True,axis='y')
 
     if out_folder is not None:
@@ -248,7 +249,7 @@ def plot_mean_areas(datasets:list[str]|list[Path], show:bool=False, out_folder:s
     ax.set_xlabel(r"Labels' area as % of the whole image.", fontsize=TEXT_FONTSIZE)
 
     import matplotlib.ticker as mtick
-    tick_format = mtick.PercentFormatter(symbol="%")
+    tick_format = mtick.PercentFormatter(xmax=1.0)
     ax.xaxis.set_major_formatter(tick_format)
 
     plt.xticks(fontsize = TEXT_FONTSIZE)
@@ -370,7 +371,8 @@ def plot_instances_per_image(datasets:list[str]|list[Path], show:bool=False, out
         vp.set_linewidth(1)
     
     plt.grid(visible=True, axis='y')
-    plt.yticks(fontsize=TEXT_FONTSIZE)
+    plt.tick_params(axis="y",labelsize=TEXT_FONTSIZE)
+    plt.tick_params(axis="x",labelsize=TEXT_FONTSIZE, rotation=TICK_ROTATION, rotation_mode="xtick")
     ax.set_ylabel("Number of item instances", fontsize=TEXT_FONTSIZE)
     ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
 
@@ -411,9 +413,8 @@ def plot_number_of_images_per_dataset(datasets:list[str]|list[Path], show:bool=F
 
     ax.set_title(plot_title, fontsize=TITLE_FONTSIZE)
     ax.set_ylabel("Number of images", fontsize=TEXT_FONTSIZE)
-    # ax.set_xlabel(fontsize=TEXT_FONTSIZE)
-    # plt.yticks(fontsize = TEXT_FONTSIZE)
-    # plt.xticks(fontsize = TEXT_FONTSIZE)
+    plt.tick_params(axis="y",labelsize=TEXT_FONTSIZE)
+    plt.tick_params(axis="x",labelsize=TEXT_FONTSIZE, rotation=TICK_ROTATION, rotation_mode="xtick")
 
     # ax.set_ybound(upper=2500)
     plt.grid(visible=True,axis='y')
