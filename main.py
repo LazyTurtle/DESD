@@ -158,25 +158,25 @@ HYP_SMC =[
     r'config\hyp\E3\SMC4.yaml',
 ]
 
-SMA_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synA_minne\evaluation')
-SMA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synA_minne\folds_training')
-SMA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synA_minne\folds_evaluation')
-SMA_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synA_minne\plots_train')
-SMA_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synA_minne\plots_eval')
+SMA_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\A\evaluation')
+SMA_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\A\folds_training')
+SMA_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\A\folds_evaluation')
+SMA_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\A\plots_train')
+SMA_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\A\plots_eval')
 
 
-SMB_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synB_minne\evaluation')
-SMB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synB_minne\folds_training')
-SMB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synB_minne\folds_evaluation')
-SMB_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synB_minne\plots_train')
-SMB_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synB_minne\plots_eval')
+SMB_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\B\evaluation')
+SMB_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\B\folds_training')
+SMB_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\B\folds_evaluation')
+SMB_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\B\plots_train')
+SMB_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\B\plots_eval')
 
 
-SMC_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\synC_minne\evaluation')
-SMC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\synC_minne\folds_training')
-SMC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\synC_minne\folds_evaluation')
-SMC_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\synC_minne\plots_train')
-SMC_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\synC_minne\plots_eval')
+SMC_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT3\C\evaluation')
+SMC_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT3\C\folds_training')
+SMC_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT3\C\folds_evaluation')
+SMC_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT3\C\plots_train')
+SMC_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT3\C\plots_eval')
 
 
 ################################################################################
@@ -499,7 +499,7 @@ def Experiment3():
         subsample.reduce_dataset(minne, output / 'M4', int(240 * (1/5)))
 
         A = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic A")
-        A_out = Path(r"data\EXPERIMENT3\A")
+        A_out = Path(r"data\EXPERIMENT3\OA")
         subsample.reduce_dataset(A, A_out / 'A0', int(3840 * (4/5)))
         subsample.reduce_dataset(A, A_out / 'A1', int(1920 * (4/5)))
         subsample.reduce_dataset(A, A_out / 'A2', int(960 * (4/5)))
@@ -507,7 +507,7 @@ def Experiment3():
         subsample.reduce_dataset(A, A_out / 'A4', int(240 * (4/5)))
 
         B = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic B")
-        B_out = Path(r"data\EXPERIMENT3\B")
+        B_out = Path(r"data\EXPERIMENT3\OB")
         subsample.reduce_dataset(B, B_out / 'B0', int(3840 * (4/5)))
         subsample.reduce_dataset(B, B_out / 'B1', int(1920 * (4/5)))
         subsample.reduce_dataset(B, B_out / 'B2', int(960 * (4/5)))
@@ -515,7 +515,7 @@ def Experiment3():
         subsample.reduce_dataset(B, B_out / 'B4', int(240 * (4/5)))
 
         C = Path(r"C:\Users\Emys\Pictures\SyntAC\Synthetic C")
-        C_out = Path(r"data\EXPERIMENT3\C")
+        C_out = Path(r"data\EXPERIMENT3\OC")
         subsample.reduce_dataset(C, C_out / 'C0', int(3840 * (4/5)))
         subsample.reduce_dataset(C, C_out / 'C1', int(1920 * (4/5)))
         subsample.reduce_dataset(C, C_out / 'C2', int(960 * (4/5)))

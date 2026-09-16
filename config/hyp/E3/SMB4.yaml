@@ -1,6 +1,6 @@
 ############ TRAINING
 model: yolo26m.pt
-data: D:\workspace\DESD\data\EXPERIMENT3\B\SMB4\data.yaml
+data: D:\workspace\DESD\data\EXPERIMENT3\D\B\SMB4\data.yaml
 epochs: 300
 time: None
 patience: 100
@@ -11,7 +11,7 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/EXPERIMENT3/synB_minne/training/SMB/SMB4
+project: data/EXPERIMENT3/B/training/SMB/SMB4
 name: SMB4
 exist_ok: False
 pretrained: True
