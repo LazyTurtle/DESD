@@ -191,11 +191,11 @@ HYP_SN =[
     r'config\hyp\E4\SN50.yaml',
 ]
 
-SN_EVALUATION_FOLDER =                 Path(r'data\E4\SN\evaluation')
-SN_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\SN\folds_training')
-SN_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\SN\folds_evaluation')
-SN_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\SN\plots_train')
-SN_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\SN\plots_eval')
+SN_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT4\SN\evaluation')
+SN_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT4\SN\folds_training')
+SN_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT4\SN\folds_evaluation')
+SN_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT4\SN\plots_train')
+SN_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT4\SN\plots_eval')
 
 HYP_SF =[
     r'config\hyp\E4\SF00.yaml',
@@ -206,11 +206,11 @@ HYP_SF =[
     r'config\hyp\E4\SF50.yaml',
 ]
 
-SF_EVALUATION_FOLDER =                 Path(r'data\E4\SF\evaluation')
-SF_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\SF\folds_training')
-SF_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\SF\folds_evaluation')
-SF_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\SF\plots_train')
-SF_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\SF\plots_eval')
+SF_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT4\SF\evaluation')
+SF_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT4\SF\folds_training')
+SF_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT4\SF\folds_evaluation')
+SF_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT4\SF\plots_train')
+SF_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT4\SF\plots_eval')
 
 HYP_SM =[
     r'config\hyp\E4\SM00.yaml',
@@ -221,11 +221,11 @@ HYP_SM =[
     r'config\hyp\E4\SM50.yaml',
 ]
 
-SM_EVALUATION_FOLDER =                 Path(r'data\E4\minne\evaluation')
-SM_AGGREGATED_TRAINING_RESULTS =       Path(r'data\E4\minne\folds_training')
-SM_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\E4\minne\folds_evaluation')
-SM_PLOT_TRAINING_OUTPUT =              Path(r'data\E4\minne\plots_train')
-SM_PLOT_EVALUATION_OUTPUT =            Path(r'data\E4\minne\plots_eval')
+SM_EVALUATION_FOLDER =                 Path(r'data\EXPERIMENT4\SM\evaluation')
+SM_AGGREGATED_TRAINING_RESULTS =       Path(r'data\EXPERIMENT4\SM\folds_training')
+SM_AGGREGATED_EVALUATION_RESULTS =     Path(r'data\EXPERIMENT4\SM\folds_evaluation')
+SM_PLOT_TRAINING_OUTPUT =              Path(r'data\EXPERIMENT4\SM\plots_train')
+SM_PLOT_EVALUATION_OUTPUT =            Path(r'data\EXPERIMENT4\SM\plots_eval')
 
 
 def load_yaml(yaml_configuration_file:str|Path):
