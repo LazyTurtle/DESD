@@ -620,6 +620,119 @@ def Experiment4():
         SF_PLOT_EVALUATION_OUTPUT
     )
 
+def Experiment5():
+    from bootstrap_f1 import bootstrap_f1_difference, _save_output, _print_report
+    def bootstrap(A, B, output:Path|str = Path('data/bootstrap'), conf = 0.5):
+        A = Path(A)
+        B = Path(B)
+        output = Path(output)
+        results = bootstrap_f1_difference(A, B, OPEN_IOT_DATASET, conf)
+        _save_output(results,Path(output / f'{A.stem}-{B.stem}'))
+        _print_report(results)
+
+    # E2a
+    bootstrap(
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        output=r'data/bootstrap/E2a'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        output=r'data/bootstrap/E2a'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        output=r'data/bootstrap/E2a'
+    )
+    
+    # E2b
+    bootstrap(
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        r'data\EXPERIMENT2B\A\training\SA\SA3',
+        output=r'data/bootstrap/E2b'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        r'data\EXPERIMENT2B\B\training\SB\SB3',
+        output=r'data/bootstrap/E2b'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        r'data\EXPERIMENT2B\C\training\SC\SC3',
+        output=r'data/bootstrap/E2b'
+    )
+
+    # E3
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\A\training\SMA\SMA1',
+        output=r'data/bootstrap/E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\B\training\SMB\SMB1',
+        output=r'data/bootstrap/E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\C\training\SMC\SMC1',
+        output=r'data/bootstrap/E3'
+    )
+
+
+    # E4
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM50',
+        r'data\EXPERIMENT4\SM\training\SM25',
+        output=r'data/bootstrap/E4'
+    )
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM50',
+        r'data\EXPERIMENT4\SM\training\SM10',
+        output=r'data/bootstrap/E4'
+    )
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM50',
+        r'data\EXPERIMENT4\SM\training\SM05',
+        output=r'data/bootstrap/E4'
+    )
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM50',
+        r'data\EXPERIMENT4\SM\training\SM02',
+        output=r'data/bootstrap/E4'
+    )
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM50',
+        r'data\EXPERIMENT4\SM\training\SM00',
+        output=r'data/bootstrap/E4'
+    )
+    bootstrap(
+        r'data\EXPERIMENT4\SM\training\SM10',
+        r'data\EXPERIMENT4\SM\training\SM05',
+        output=r'data/bootstrap/E4'
+    )
+
+    # E2-E3
+    bootstrap(
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        r'data\EXPERIMENT3\A\training\SMA\SMA3',
+        output=r'data/bootstrap/E2-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        r'data\EXPERIMENT3\B\training\SMB\SMB3',
+        output=r'data/bootstrap/E2-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        r'data\EXPERIMENT3\C\training\SMC\SMC3',
+        output=r'data/bootstrap/E2-E3'
+    )
+
+
+
 def CalculateNearDuplicates():
     logs = ['|Dataset Name|pHash|DINO|']
     datasets = [
@@ -706,11 +819,12 @@ def CalculateNearDuplicates():
     with open('data/near_duplicate_report.md', 'w') as report:
         report.writelines("\n".join(logs))
 
+
 if __name__ == "__main__":
     logger = my_logging.get_logger('ExperimentPipeline', out_folder='logs/pipeline')
 
     try:
-
+        pass
         Experiment1()
         logger.info('Experiment 1 complete.')
         Experiment2()
@@ -719,6 +833,8 @@ if __name__ == "__main__":
         logger.info('Experiment 3 complete.')
         Experiment4()
         logger.info('Experiment 4 complete.')
+        Experiment5()
+        logger.info('Experiment 5 complete.')
 
         CalculateNearDuplicates()
 
