@@ -1,6 +1,6 @@
 ############ TRAINING
 model: yolo26m.pt
-data: C:\Users\Emys\Pictures\SyntAC\SMC\SMC4\data.yaml
+data: D:\workspace\DESD\data\EXPERIMENT3\D\C\SMC4\data.yaml
 epochs: 300
 time: None
 patience: 100
@@ -11,7 +11,7 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/synC_minne/training/SMC/SMC4
+project: data/EXPERIMENT3/C/training/SMC/SMC4
 name: SMC4
 exist_ok: False
 pretrained: True

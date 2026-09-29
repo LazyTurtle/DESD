@@ -1,6 +1,6 @@
 ############ TRAINING
 model: yolo26m.pt
-data: D:\workspace\DESD\data\EXPERIMENT4\D\SF\F50\data.yaml
+data: C:\Users\Emys\Pictures\SyntAC\SC\SC0\data.yaml
 epochs: 300
 time: None
 patience: 100
@@ -11,8 +11,8 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/EXPERIMENT4/SF/training\SF50
-name: SF50
+project: data/EXPERIMENT2B/C/training/SC/SC2
+name: SC2
 exist_ok: False
 pretrained: True
 optimizer: AdamW
@@ -36,7 +36,7 @@ momentum: 0.9
 weight_decay: 0.0005
 warmup_epochs: 3.0
 warmup_momentum: 0.8
-warmup_bias_lr: 0.1
+warmup_bias_lr: 0.0
 box: 0.05  # box loss gain
 cls: 0.3  # cls loss gain
 dfl: 1.5 # focal loss

@@ -11,7 +11,7 @@ save_period: -1
 cache: False
 device: 0
 workers: 8
-project: data/E1/training/PUBLIC_DATASETS/Agroscope Apple
+project: data\EXPERIMENT1\training\PUBLIC_DATASETS/Agroscope Apple
 name: Agroscope Apple
 exist_ok: False
 pretrained: True

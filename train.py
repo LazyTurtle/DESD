@@ -117,6 +117,32 @@ def train_kfold(yaml_configuration_file:Path|str, k:int):
         LOGGER.info('Training complete')
 
 
+def train_random_n(yaml_configuration_file:Path|str, n_runs:int, n_samples:int):
+    LOGGER = logger()
+    clean_memory()
+
+    config = load_config(yaml_configuration_file)
+    dataset_path = Path(config['data']).parent
+    samples = load_samples(dataset_path)
+
+    name = config['name']
+    for i in range(n_runs):
+        LOGGER.info(f"--- Run {i+1} ---")
+        random.shuffle(samples)
+        subsamples = samples[:n_samples]
+        split_index = int(len(subsamples)*0.8)
+        train_set = subsamples[:split_index]
+        val_set = subsamples[split_index:]
+        samples_to_file(train_set, dataset_path/'train.txt')
+        samples_to_file(val_set, dataset_path/'validation.txt')
+        config['name'] = name + f' Run{i+1}'
+
+        model = YOLO(config['model'])
+        LOGGER.info('Start training')
+        train_metrics = model.train(**config)
+        LOGGER.info('Training complete')
+
+
 def train(yaml_configuration_file:Path|str)->tuple:
     LOGGER = logger()
 
