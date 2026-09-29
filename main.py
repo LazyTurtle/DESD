@@ -630,6 +630,19 @@ def Experiment5():
         _save_output(results,Path(output / f'{A.stem}-{B.stem}'))
         _print_report(results)
 
+    # E1
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\Meta Fruit',
+        output=r'data/bootstrap/E1'
+    )
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\Apple MOTS',
+        output=r'data/bootstrap/E1'
+    )
+
+
     # E2a
     bootstrap(
         r'data\EXPERIMENT2\C\training\SC\SC3',
@@ -664,23 +677,56 @@ def Experiment5():
         output=r'data/bootstrap/E2b'
     )
 
-    # E3
+    # E1 - E2a
     bootstrap(
         r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
-        r'data\EXPERIMENT3\A\training\SMA\SMA1',
-        output=r'data/bootstrap/E3'
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        output=r'data/bootstrap/E1-E2a'
     )
     bootstrap(
         r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
-        r'data\EXPERIMENT3\B\training\SMB\SMB1',
-        output=r'data/bootstrap/E3'
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        output=r'data/bootstrap/E1-E2a'
     )
     bootstrap(
         r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
-        r'data\EXPERIMENT3\C\training\SMC\SMC1',
-        output=r'data/bootstrap/E3'
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        output=r'data/bootstrap/E1-E2a'
     )
 
+    # E1 - E3
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\A\training\SMA\SMA3',
+        output=r'data/bootstrap/E1-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\B\training\SMB\SMB3',
+        output=r'data/bootstrap/E1-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT1\training\PUBLIC_DATASETS\MinneApple',
+        r'data\EXPERIMENT3\C\training\SMC\SMC3',
+        output=r'data/bootstrap/E1-E3'
+    )
+
+    # E2 - E3
+    bootstrap(
+        r'data\EXPERIMENT2\A\training\SA\SA3',
+        r'data\EXPERIMENT3\A\training\SMA\SMA3',
+        output=r'data/bootstrap/E2-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\B\training\SB\SB3',
+        r'data\EXPERIMENT3\B\training\SMB\SMB3',
+        output=r'data/bootstrap/E2-E3'
+    )
+    bootstrap(
+        r'data\EXPERIMENT2\C\training\SC\SC3',
+        r'data\EXPERIMENT3\C\training\SMC\SMC3',
+        output=r'data/bootstrap/E2-E3'
+    )
 
     # E4
     bootstrap(
@@ -712,23 +758,6 @@ def Experiment5():
         r'data\EXPERIMENT4\SM\training\SM10',
         r'data\EXPERIMENT4\SM\training\SM05',
         output=r'data/bootstrap/E4'
-    )
-
-    # E2-E3
-    bootstrap(
-        r'data\EXPERIMENT2\A\training\SA\SA3',
-        r'data\EXPERIMENT3\A\training\SMA\SMA3',
-        output=r'data/bootstrap/E2-E3'
-    )
-    bootstrap(
-        r'data\EXPERIMENT2\B\training\SB\SB3',
-        r'data\EXPERIMENT3\B\training\SMB\SMB3',
-        output=r'data/bootstrap/E2-E3'
-    )
-    bootstrap(
-        r'data\EXPERIMENT2\C\training\SC\SC3',
-        r'data\EXPERIMENT3\C\training\SMC\SMC3',
-        output=r'data/bootstrap/E2-E3'
     )
 
 
